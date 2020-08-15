@@ -88,6 +88,14 @@ class FormPremade extends React.Component{
         var aadharFile1 = this.state.aadharFile1;
         var aadharFile2 = this.state.aadharFile2;
 
+        if(mobile === "" || aadharNumber === "" || aadharFile1 === null || aadharFile2 === null){
+            swal({
+                content: generateElement(`Please fill all the details first`),
+                icon: "error",
+            });
+            return;
+        }
+
         if(aadharFile1 === null || aadharFile2 === null){
             swal({
                 content: generateElement(`Please upload 2 files both front and back`),

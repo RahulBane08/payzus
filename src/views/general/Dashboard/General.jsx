@@ -52,7 +52,7 @@ class General extends React.Component{
               const accounts = await Web3.eth.getAccounts();
               await this.setState({account:accounts[0]})
 
-              const PayzusContract = new Web3.eth.Contract(PayzusContractABI,"0x772E39f10f4404044Df408235bB3F6fB6E7931F2");
+              const PayzusContract = new Web3.eth.Contract(PayzusContractABI,"0xe9eFf2c6EFa28232F376090a598384496dBF8c76");
 
               const result = await PayzusContract.methods.balanceOf(this.state.account).call()
 
@@ -231,7 +231,7 @@ class General extends React.Component{
                                                               <div style={{width: 100+'%', height: 250}}>
                                                                     <ul style={{marginTop:"30px"}}>
                                                                     <p><li>Token Balance      <span style={{float:"right"}}>{(this.state.tokenBalance) / (10 ** 18)} PZS</span></li></p>
-                                                                      <p><li>Rewards          <span style={{float:"right"}}>{this.state.rewards} PZS</span></li></p>
+                                                                      <p><li>Rewards          <span style={{float:"right"}}>{(this.state.rewards) / (10 ** 18)} PZS</span></li></p>
                                                                       <p><li>DirectReferred   <span style={{float:"right"}}>{this.state.directReferred}</span></li></p>
                                                                       <p><li>IndirectReferred <span style={{float:"right"}}>{this.state.indirectReferred}</span></li></p>
                                                                       <p><li>Your referrer    <span style={{float:"right"}}>{this.truncate(this.state.referrerAddress)}</span></li></p>

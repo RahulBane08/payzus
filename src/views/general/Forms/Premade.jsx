@@ -27,7 +27,7 @@ class FormPremade extends React.Component{
             loading:false,
             referrerAddress:"",
             tokenNumbers:250,
-            price:"0",
+            price:0,
             // rewardsCredited:true,
             // rewards:0,
             WhiteListed:false,
@@ -72,7 +72,7 @@ class FormPremade extends React.Component{
             }
 
 
-            const PayzusContract = new Web3.eth.Contract(PayzusContractABI,"0xCD8d7f0074dbAbD47AC5b46adaC9d0EAF7e150C5");
+            const PayzusContract = new Web3.eth.Contract(PayzusContractABI,"0xd31F388da6037f735eF612D591f3b49E0Ea33647");
             // this.setState({PayzusContract})
 
             // console.log(this.state.PayzusContract)
@@ -100,15 +100,32 @@ class FormPremade extends React.Component{
     // }
 
     handleReferrence = async () => {
-        const result = await this.state.PayzusContract.methods.addReferrer(this.state.referrerAddress).send({from : this.state.accounts});
-        console.log(result);
 
-        await this.setState({referrerAddress:""})
+        if(this.state.referrerAddress === ""){
+            swal({
+                content:generateElement(`Enter the referral address first`),
+                icon:"error"
+            });
+            return;
+        }
+        console.log(this.state.referrerAddress);
+
+        const result = await this.state.PayzusContract.methods.addReferrer(this.state.referrerAddress)
+            .send({from : this.state.account});
+
+        console.log(result);
 
         swal({
             content:generateElement(`Referral code Applied`),
             icon:"success"
         });
+
+        this.reset();
+        
+    }
+
+    reset = async () => {
+        await this.setState({referrerAddress:""})
     }
 
     handleTokenChange = async (value) => {
@@ -130,6 +147,8 @@ class FormPremade extends React.Component{
 
     handleBuyPayzus = async () => {
 
+        if(this.state.price != 0){
+
         var tokens = this.state.tokenNumbers;
 
         let count;
@@ -143,6 +162,7 @@ class FormPremade extends React.Component{
         }
 
         else {
+            
             await this.setState({loading:true})
 
         const result = await this.state.PayzusContract.methods.buyTokens(tokens)
@@ -185,6 +205,7 @@ class FormPremade extends React.Component{
         const events = await this.state.PayzusContract.methods.accounts(this.state.account).call()
 
         // await this.setState({rewardsCredited:true})
+        console.log(events);
 
         await database
                 .child(this.state.uid)
@@ -207,6 +228,13 @@ class FormPremade extends React.Component{
         console.log(events.reward);
         
         }
+
+        }
+        
+        else{
+            return;
+        }
+
     }
 
     render(){

@@ -55,6 +55,14 @@ class FormGrid extends React.Component{
     var password = this.state.password;
     var name = this.state.name;
 
+    if(email === "" || password === "" || name === ""){
+      swal({
+        content: generateElement(`Please fill all the details first`),
+        icon: "error",
+      });
+      return;
+    }
+
 
     firebaseApp.auth().createUserWithEmailAndPassword(email,password)
       .then(() => {
