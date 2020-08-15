@@ -234,7 +234,7 @@ class FormGrid extends React.Component{
             <Button onClick={() => this.handleRegister(this.state.email, this.state.password)}>Submit</Button>
         </FormGroup> */}
       </Form>
-      <Button onClick={(event) => this.handleLogin(event)}>Login</Button>
+      <Button onClick={(event) => this.handleLogin(event)} color="primary" style={{width:'150px'}}>Login</Button>
       {/* <Button onClick={(event) => this.final(event)}>final</Button> */}
       
       {/* <Button onClick={this.handleLoginWithGoogle}>Login With Google</Button> */}

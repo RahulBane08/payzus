@@ -24,10 +24,10 @@ class FormPremade extends React.Component{
             PayzusContract:null,
             account:null,
             Web3:null,
-            loaded:false,
+            loading:false,
             referrerAddress:"",
-            tokenNumbers:0,
-            price:bigInt(0),
+            tokenNumbers:250,
+            price:"0",
             // rewardsCredited:true,
             // rewards:0,
             WhiteListed:false,
@@ -72,13 +72,13 @@ class FormPremade extends React.Component{
             }
 
 
-            const PayzusContract = new Web3.eth.Contract(PayzusContractABI,"0x1F28ECA92cE85d9BC2AEa738Db63bfDd0A6F6fAa");
+            const PayzusContract = new Web3.eth.Contract(PayzusContractABI,"0xCD8d7f0074dbAbD47AC5b46adaC9d0EAF7e150C5");
             // this.setState({PayzusContract})
 
             // console.log(this.state.PayzusContract)
             
             
-            this.setState({PayzusContract, account, Web3, loaded:true })
+            this.setState({PayzusContract, account, Web3 })
             // console.log(temp)
             
         }
@@ -114,16 +114,27 @@ class FormPremade extends React.Component{
     handleTokenChange = async (value) => {
         await this.setState({tokenNumbers:value})
         console.log(this.state.tokenNumbers)
-        const price = await bigInt(this.state.PayzusContract.methods.priceOf(this.state.tokenNumbers.toString()).call())
-        this.setState({price})
+
+        this.priceOf(this.state.tokenNumbers)
+    }
+
+    priceOf = async(value) => {
+        if(value === null){
+            return;
+        }
+
+        const price = await this.state.PayzusContract.methods.priceOf(value).call()
+        await this.setState({price})
         console.log(this.state.price)
     }
 
     handleBuyPayzus = async () => {
 
+        var tokens = this.state.tokenNumbers;
+
         let count;
 
-        if(this.state.tokenNumbers < 220 || this.state.tokenNumbers > 6750){
+        if(tokens < 250 || tokens > 7450){
             await swal({
                 content:generateElement(`Please enter tokens in the defined range`),
                 icon:"error"
@@ -132,11 +143,13 @@ class FormPremade extends React.Component{
         }
 
         else {
+            await this.setState({loading:true})
 
-        const result = await this.state.PayzusContract.methods.buyTokens(this.state.tokenNumbers)
-            .send({from:this.state.account, value:this.state.price.toString()});
+        const result = await this.state.PayzusContract.methods.buyTokens(tokens)
+            .send({from:this.state.account, value:this.state.price});
 
         console.log(result)
+        
 
         await database
                 .child(this.state.uid + '/Transactions/count')
@@ -156,12 +169,12 @@ class FormPremade extends React.Component{
                             }
                         })
                     
-                    .then(() => {
-                        swal({
-                            content:generateElement(`Transaction successfull`),
-                            icon:"success"
-                        })
-                    })
+                    // .then(() => {
+                    //     swal({
+                    //         content:generateElement(`Transaction successfull`),
+                    //         icon:"success"
+                    //     })
+                    // })
                 })
 
     
@@ -177,24 +190,26 @@ class FormPremade extends React.Component{
                 .child(this.state.uid)
                 .update({Rewards:events.reward, DirectReferred:events.referredCount, IndirectReferred:events.referredCountIndirect, Referrer:events.referrer})
                 .then(() => {
-                    swal({
-                        content:generateElement(`Rewards Credited`),
-                        icon:"success"
-                    });
+                    this.setState({loading:false},() => {
+                        swal({
+                            content:generateElement(`Transaction Successful`),
+                            icon:"success"
+                        });
+                    }) 
+                    
                 })
                 .catch((error) => {
                     console.log(error)
                 })
 
         // this.setState({rewards:events.reward})
+        
         console.log(events.reward);
+        
         }
     }
 
     render(){
-        if(!this.state.loaded){
-            return <div>Loading ...</div>
-        }
 
         return (
             <div>
@@ -253,8 +268,8 @@ class FormPremade extends React.Component{
                                                                 <div className="form-group">
                                                                     <label htmlFor="inputAddress">Number of Payzus Tokens</label>
                                                                     <NumericInput 
-                                                                        min={220}
-                                                                        max={7500}
+                                                                        min={250}
+                                                                        max={7450}
                                                                         value={this.state.tokenNumbers}
                                                                         className="form-control"
                                                                         // onChange={value => this.setState({tokenNumbers:value})}
@@ -263,7 +278,7 @@ class FormPremade extends React.Component{
 
                                                                 </div>
                                                                 <p color="muted">
-                                                                    You can only purchase token in the range 220 to 6750.
+                                                                    You can only purchase token in the range 250 to 7450.
                                                                 </p>
                                                                 <div className="form-row">
                                                                     <div className="form-group col-md-5">
@@ -288,7 +303,12 @@ class FormPremade extends React.Component{
                                                                         onClick={this.handleBuyPayzus}
                                                                         style={{width:'150px'}}
                                                                     >
-                                                                        Buy
+                                                                        {
+                                                                            this.state.loading ?
+                                                                            (<div>Pending ...</div>)
+                                                                            : (<div>Buy</div>)
+                                                                        }
+                                                                       
                                                                     </button>
                                                                 </div>
                                                                 

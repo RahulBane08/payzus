@@ -74,7 +74,7 @@ class UIBSDatatable extends React.Component{
 
                     <div className="page-title">
                         <div className="float-left">
-                            <h1 className="title">Datatables</h1>
+                            <h1 className="title">Market</h1>
                             <p>{this.state.apiResponse}</p>
                         </div>
                     </div>
@@ -82,17 +82,17 @@ class UIBSDatatable extends React.Component{
 
                           
 
-                    <div className="col-12">
+                    <div className="col-12" >
                         <section className="box ">
                             <header className="panel_header">
-                                <h2 className="title float-left">Data Tables</h2>
+                                <h2 className="title float-left">All Top ERC20 Based Tokens</h2>
                                 
                             </header>
                             <div className="content-body">
                                 <div className="row">
                                     <div className="col-lg-12 dt-disp">
                             
-  <Datatable
+  {/* <Datatable
   tableHeader={header}
   tableBody={body}
   keyName="userTable"
@@ -102,7 +102,9 @@ class UIBSDatatable extends React.Component{
   initialSort={{prop: "id", isAscending: true}}
   onSort={onSortFunction}
   labels={customLabels}
-/>
+/> */}                              <div style={{textAlign:"center", height:'200px'}}>
+                                        <h2> Coming Soon ... </h2>
+                                    </div>
 
                                
 

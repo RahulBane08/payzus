@@ -122,7 +122,7 @@ class Sidebar extends React.Component{
 
 
         return (
-            <div className="sidebar menubar" data-color="black" style={{height:'100vh'}}>
+            <div className="sidebar menubar" data-color="black" style={{height:'100%'}}>
 
                 <div className="logo">
                     {/* <a href="/" className="logo-mini">

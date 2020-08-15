@@ -17,7 +17,9 @@ class UITables extends React.Component{
      this.state = {
        isAvailable:true,
        uid:"",
-       txArray:[]
+       txArray:[],
+       count:0,
+       array:[]
      }
    }
 
@@ -31,9 +33,14 @@ class UITables extends React.Component{
               .child(this.state.uid + '/Transactions')
               .once('value', snapshot => {
                 this.setState({txArray:snapshot.val()})
-                
-              })
-      console.log(this.state.txArray); 
+              });
+      // console.log(this.state.txArray,this.state.count)
+
+
+      // for(var i=0 ;i< this.state.count; i++){
+      //   this.state.array.push(this.state.txArray[i].value)
+      // }
+      // console.log(this.state.array)
           
    }
     

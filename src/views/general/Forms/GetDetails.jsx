@@ -23,7 +23,8 @@ class FormPremade extends React.Component{
             mobile:"",
             aadharNumber:"",
             aadharFile1:null,
-            aadharFile2:null
+            aadharFile2:null,
+            kycStatus:null
             
 
         }
@@ -44,6 +45,15 @@ class FormPremade extends React.Component{
         await this.setState({uid:this.props.uid});
 
         console.log(this.state.uid);
+
+        await database
+            .child(this.state.uid + '/KYCSubmitted')
+            .once('value', snapshot => {
+                this.setState({kycStatus:snapshot.val()});
+                // console.log(snapshot.val())
+            })
+
+            console.log(this.state.kycStatus);
        
     }
 
@@ -118,8 +128,16 @@ class FormPremade extends React.Component{
                                     <h1 className="title">Get Your KYC Done</h1>
                                 </div>
                             </div>
-
-                                <div className="row margin-0">
+                            {
+                                this.state.kycStatus ?
+                                (
+                                    <div style={{textAlign:"center"}}>
+                                        <h2> Your KYC is already submitted</h2>
+                                    </div>
+                                )
+                                :
+                                (
+                                    <div className="row margin-0">
                                     <div className="col-12">
                                         <section className="box ">
                                             <header className="panel_header" >
@@ -176,6 +194,11 @@ class FormPremade extends React.Component{
                                         </section>
                                     </div>
                                 </div>
+                                )
+                                
+                            }
+
+                                
                                                             
                         </Col>
                     </Row>

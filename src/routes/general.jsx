@@ -18,13 +18,13 @@ var dashRoutes = [
     { path: BASEDIR+"/dashboard", name: "Dashboard", icon: "speedometer", component: General },
 
 
-    { path: BASEDIR+"/history", name: "history", icon: "chart", component: UITables },
+    { path: BASEDIR+"/history", name: "history", icon: "layers", component: UITables },
 
-    { path: BASEDIR+"/market", name: "Market", icon: "speedometer", component: UIBSDatatable },
+    { path: BASEDIR+"/market", name: "Market", icon: "chart", component: UIBSDatatable },
 
-    { path: BASEDIR+"/kyc", name: "KYC", icon: "speedometer", component: GetDetails },
+    { path: BASEDIR+"/kyc", name: "KYC", icon: "puzzle", component: GetDetails },
 
-    { path: BASEDIR+"/buy-payzus", name: "Buy Payzus", icon: "speedometer", component: FormPremade },
+    { path: BASEDIR+"/buy-payzus", name: "Buy Payzus", icon: "bag", component: FormPremade },
 
 
 

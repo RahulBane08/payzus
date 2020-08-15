@@ -20,8 +20,9 @@ import {
 } from 'variables/general/dashboard-charts.jsx';
 
 //import CountTo from 'react-count-to';
-
+import web3 from "web3";
 import firebaseApp from "../../../firebase-config";
+import PayzusContractABI from "../../../contracts/PAYZUS.json";
 
 const database = firebaseApp.database().ref("Users");
 
@@ -35,7 +36,9 @@ class General extends React.Component{
         rewards:0,
         directReferred:0,
         indirectReferred:0,
-        referrerAddress:"0x00"
+        referrerAddress:"0x00",
+        tokenBalance:0,
+        account:null
       };
     }
     
@@ -45,12 +48,21 @@ class General extends React.Component{
 
       try{
 
+              const Web3 = new web3(web3.givenProvider);
+              const accounts = await Web3.eth.getAccounts();
+              await this.setState({account:accounts[0]})
+
+              const PayzusContract = new Web3.eth.Contract(PayzusContractABI,"0x772E39f10f4404044Df408235bB3F6fB6E7931F2");
+
+              const result = await PayzusContract.methods.balanceOf(this.state.account).call()
+
+              await this.setState({tokenBalance:result});
+
         firebaseApp.auth().onAuthStateChanged((user) => {
           if(user){
               var uid = user.uid
                       
               // console.log(uid)
-              
               
       
               database
@@ -218,10 +230,11 @@ class General extends React.Component{
                                                           <div className="row">
                                                               <div style={{width: 100+'%', height: 250}}>
                                                                     <ul style={{marginTop:"30px"}}>
-                                                                      <p><li>Rewards:          <span style={{float:"right"}}>{this.state.rewards} PZS</span></li></p>
-                                                                      <p><li>DirectReferred:   <span style={{float:"right"}}>{this.state.directReferred}</span></li></p>
-                                                                      <p><li>IndirectReferred: <span style={{float:"right"}}>{this.state.indirectReferred}</span></li></p>
-                                                                      <p><li>Your referrer:    <span style={{float:"right"}}>{this.truncate(this.state.referrerAddress)}</span></li></p>
+                                                                    <p><li>Token Balance      <span style={{float:"right"}}>{(this.state.tokenBalance) / (10 ** 18)} PZS</span></li></p>
+                                                                      <p><li>Rewards          <span style={{float:"right"}}>{this.state.rewards} PZS</span></li></p>
+                                                                      <p><li>DirectReferred   <span style={{float:"right"}}>{this.state.directReferred}</span></li></p>
+                                                                      <p><li>IndirectReferred <span style={{float:"right"}}>{this.state.indirectReferred}</span></li></p>
+                                                                      <p><li>Your referrer    <span style={{float:"right"}}>{this.truncate(this.state.referrerAddress)}</span></li></p>
                                                                     </ul>
                                                             
                                                                     

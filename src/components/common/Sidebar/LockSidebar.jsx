@@ -145,7 +145,7 @@ class Sidebar extends React.Component{
                     </div>
                     <div className="profile-details col-8">
                         <h3>
-                            <a style={{overflow: 'hidden', textOverflow: 'ellipsis'}}></a>
+                            <p style={{color:"#fff",fontSize:'20px', marginTop:'25px'}}>P A Y Z U S</p>
                             <span className="profile-status online"></span>
                         </h3>
                         <p className="profile-title">

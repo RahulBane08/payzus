@@ -168,7 +168,7 @@ class FormGrid extends React.Component{
         </FormGroup>
         
       </Form>
-      <Button onClick={(event) => this.handleRegister(event)}>Register</Button>
+      <Button onClick={(event) => this.handleRegister(event)} color="primary" style={{width:'150px'}}>Register</Button>
       
       
 

@@ -10,10 +10,10 @@ import Home from "../views/general/Forms/home";
 var indexRoutes = [
 
     
-    { path: "/register", name: "Register", icon:"speedometer", component: Register },
-    { path: "/login", name: "Login", icon:"speedometer", component: Login },
-    { path: "/market",icon:"speedometer", name: "Market", component: UIBSDatatable },
-    {path: "/home", name:"WhatNext", icon:"speedometer", component:Home },
+    { path: "/register", name: "Register", icon:"note", component: Register },
+    { path: "/login", name: "Login", icon:"key", component: Login },
+    { path: "/market", name: "Market",icon:"chart", component: UIBSDatatable },
+    {path: "/home", name:"WhatNext", icon:"screen-desktop", component:Home },
     {redirect: true, path:"/", pathTo:"/home", name:"home"},
     
     
