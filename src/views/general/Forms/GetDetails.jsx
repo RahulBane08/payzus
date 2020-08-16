@@ -44,7 +44,7 @@ class FormPremade extends React.Component{
 
         await this.setState({uid:this.props.uid});
 
-        console.log(this.state.uid);
+        // console.log(this.state.uid);
 
         await database
             .child(this.state.uid + '/KYCSubmitted')
@@ -53,7 +53,7 @@ class FormPremade extends React.Component{
                 // console.log(snapshot.val())
             })
 
-            console.log(this.state.kycStatus);
+            // console.log(this.state.kycStatus);
        
     }
 
@@ -64,8 +64,8 @@ class FormPremade extends React.Component{
         files.length === 2 
         ?   
            this.setState({aadharFile1: files[0], aadharFile2:files[1]}, () => {
-               console.log(this.state.aadharFile1) 
-               console.log(this.state.aadharFile2)
+            //    console.log(this.state.aadharFile1) 
+            //    console.log(this.state.aadharFile2)
             })
             // this.setState({aadharFile2: files[1]}, () => {console.log(this.state.aadharFile2)})
            

@@ -23,6 +23,7 @@ import {
 import web3 from "web3";
 import firebaseApp from "../../../firebase-config";
 import PayzusContractABI from "../../../contracts/PAYZUS.json";
+import ReferralContractABI from "../../../contracts/pyzusReferral.json";
 
 const database = firebaseApp.database().ref("Users");
 
@@ -52,11 +53,18 @@ class General extends React.Component{
               const accounts = await Web3.eth.getAccounts();
               await this.setState({account:accounts[0]})
 
-              const PayzusContract = new Web3.eth.Contract(PayzusContractABI,"0xe9eFf2c6EFa28232F376090a598384496dBF8c76");
+              const PayzusContract = new Web3.eth.Contract(PayzusContractABI,"0x86690e2613be52EE927d395dB87f69EBCdf88f27");
 
-              const result = await PayzusContract.methods.balanceOf(this.state.account).call()
+              const balance = await PayzusContract.methods.balanceOf(this.state.account).call()
 
-              await this.setState({tokenBalance:result});
+              await this.setState({tokenBalance:balance});
+
+              const ReferralContract = new Web3.eth.Contract(ReferralContractABI, "0x623d2b987dcde40bc73f678b9ae57936ab32e112");
+
+              const result = await ReferralContract.methods.accounts(this.state.account).call();
+
+              await this.setState({rewards:result.reward, directReferred:result.referredCount, indirectReferred:result.referredCountIndirect, referrerAddress:result.referrer});
+
 
         firebaseApp.auth().onAuthStateChanged((user) => {
           if(user){
@@ -65,17 +73,17 @@ class General extends React.Component{
               // console.log(uid)
               
       
-              database
-                  .child(uid)
-                  .once("value", (snapshot) => {
+              // database
+              //     .child(uid)
+              //     .once("value", (snapshot) => {
       
-                      temp = snapshot.val();
+              //         temp = snapshot.val();
         
-                      // console.log(temp);
-                      this.setState({rewards:temp.Rewards, directReferred:temp.DirectReferred, indirectReferred:temp.IndirectReferred, referrerAddress:temp.Referrer});
-                      console.log(this.state.rewards)
+              //         // console.log(temp);
+              //         this.setState({rewards:temp.Rewards, directReferred:temp.DirectReferred, indirectReferred:temp.IndirectReferred, referrerAddress:temp.Referrer});
+              //         console.log(this.state.rewards)
                                           
-                  })
+              //     })
                                 
           }
           else{
@@ -231,10 +239,10 @@ class General extends React.Component{
                                                               <div style={{width: 100+'%', height: 250}}>
                                                                     <ul style={{marginTop:"30px"}}>
                                                                     <p><li>Token Balance      <span style={{float:"right"}}>{(this.state.tokenBalance) / (10 ** 18)} PZS</span></li></p>
-                                                                      <p><li>Rewards          <span style={{float:"right"}}>{(this.state.rewards) / (10 ** 18)} PZS</span></li></p>
-                                                                      <p><li>DirectReferred   <span style={{float:"right"}}>{this.state.directReferred}</span></li></p>
-                                                                      <p><li>IndirectReferred <span style={{float:"right"}}>{this.state.indirectReferred}</span></li></p>
-                                                                      <p><li>Your referrer    <span style={{float:"right"}}>{this.truncate(this.state.referrerAddress)}</span></li></p>
+                                                                      <p><li>Rewards          <span style={{float:"right"}}>{(this.state.rewards)} PZS</span></li></p>
+                                                                      <p><li>Direct Referred   <span style={{float:"right"}}>{this.state.directReferred}</span></li></p>
+                                                                      <p><li>Indirect Referred <span style={{float:"right"}}>{this.state.indirectReferred}</span></li></p>
+                                                                      <p><li>Your Referrer    <span style={{float:"right"}}>{this.truncate(this.state.referrerAddress)}</span></li></p>
                                                                     </ul>
                                                             
                                                                     

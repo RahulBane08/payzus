@@ -11,7 +11,7 @@ import bigInt from "big-integer";
 import NumericInput from 'react-numeric-input';
 import generateElement from "../../../generateElement";
 import web3 from "web3";
-import PayzusContractABI from "../../../contracts/pyzusReferral.json";
+import ReferralContractABI from "../../../contracts/pyzusReferral.json";
 import firebaseApp from '../../../firebase-config';
 
 const database = firebaseApp.database().ref("Users");
@@ -21,7 +21,7 @@ class FormPremade extends React.Component{
         super(props);
 
         this.state = {
-            PayzusContract:null,
+            ReferralContract:null,
             account:null,
             Web3:null,
             loading:false,
@@ -58,7 +58,7 @@ class FormPremade extends React.Component{
             
             const Web3 = new web3(web3.givenProvider);
             const accounts = await Web3.eth.getAccounts();
-            console.log(accounts[0]);
+            // console.log(accounts[0]);
             const account = accounts[0];
 
             if(account === undefined){
@@ -72,13 +72,13 @@ class FormPremade extends React.Component{
             }
 
 
-            const PayzusContract = new Web3.eth.Contract(PayzusContractABI,"0xd31F388da6037f735eF612D591f3b49E0Ea33647");
-            // this.setState({PayzusContract})
+            const ReferralContract = new Web3.eth.Contract(ReferralContractABI,"0x623d2b987dcde40bc73f678b9ae57936ab32e112");
+            // this.setState({ReferralContract})
 
-            // console.log(this.state.PayzusContract)
+            // console.log(this.state.ReferralContract)
             
             
-            this.setState({PayzusContract, account, Web3 })
+            this.setState({ReferralContract, account, Web3 })
             // console.log(temp)
             
         }
@@ -90,7 +90,7 @@ class FormPremade extends React.Component{
 
     getValue = (value) => {
         this.setState({WhiteListed:value})
-        console.log(this.state.WhiteListed)
+        // console.log(this.state.WhiteListed)
         
     }
 
@@ -108,12 +108,12 @@ class FormPremade extends React.Component{
             });
             return;
         }
-        console.log(this.state.referrerAddress);
+        // console.log(this.state.referrerAddress);
 
-        const result = await this.state.PayzusContract.methods.addReferrer(this.state.referrerAddress)
+        const result = await this.state.ReferralContract.methods.addReferrer(this.state.referrerAddress)
             .send({from : this.state.account});
 
-        console.log(result);
+        // console.log(result);
 
         swal({
             content:generateElement(`Referral code Applied`),
@@ -130,7 +130,7 @@ class FormPremade extends React.Component{
 
     handleTokenChange = async (value) => {
         await this.setState({tokenNumbers:value})
-        console.log(this.state.tokenNumbers)
+        // console.log(this.state.tokenNumbers)
 
         this.priceOf(this.state.tokenNumbers)
     }
@@ -140,9 +140,9 @@ class FormPremade extends React.Component{
             return;
         }
 
-        const price = await this.state.PayzusContract.methods.priceOf(value).call()
+        const price = await this.state.ReferralContract.methods.priceOf(value).call()
         await this.setState({price})
-        console.log(this.state.price)
+        // console.log(this.state.price)
     }
 
     handleBuyPayzus = async () => {
@@ -162,13 +162,13 @@ class FormPremade extends React.Component{
         }
 
         else {
-            
+
             await this.setState({loading:true})
 
-        const result = await this.state.PayzusContract.methods.buyTokens(tokens)
+        const result = await this.state.ReferralContract.methods.buyTokens(tokens)
             .send({from:this.state.account, value:this.state.price});
 
-        console.log(result)
+        // console.log(result)
         
 
         await database
@@ -189,12 +189,15 @@ class FormPremade extends React.Component{
                             }
                         })
                     
-                    // .then(() => {
-                    //     swal({
-                    //         content:generateElement(`Transaction successfull`),
-                    //         icon:"success"
-                    //     })
-                    // })
+                    .then(() => {
+                        this.setState({loading:false}, () => {
+                            swal({
+                                content:generateElement(`Transaction successfull`),
+                                icon:"success"
+                            })
+                        })
+                        
+                    })
                 })
 
     
@@ -202,30 +205,35 @@ class FormPremade extends React.Component{
 
         await this.setState({rewardsCredited:false})
 
-        const events = await this.state.PayzusContract.methods.accounts(this.state.account).call()
+        const events = await this.state.ReferralContract.methods.accounts(this.state.account).call()
+
+            // swal({
+            //     content:generateElement(`Transaction Successful`),
+            //     icon:"success"
+            // });
 
         // await this.setState({rewardsCredited:true})
-        console.log(events);
+        // console.log(events);
 
-        await database
-                .child(this.state.uid)
-                .update({Rewards:events.reward, DirectReferred:events.referredCount, IndirectReferred:events.referredCountIndirect, Referrer:events.referrer})
-                .then(() => {
-                    this.setState({loading:false},() => {
-                        swal({
-                            content:generateElement(`Transaction Successful`),
-                            icon:"success"
-                        });
-                    }) 
+        // await database
+        //         .child(this.state.uid)
+        //         .update({Rewards:events.reward, DirectReferred:events.referredCount, IndirectReferred:events.referredCountIndirect, Referrer:(events.referrer / (10 ** 18))})
+        //         .then(() => {
+        //             this.setState({loading:false},() => {
+        //                 swal({
+        //                     content:generateElement(`Transaction Successful`),
+        //                     icon:"success"
+        //                 });
+        //             }) 
                     
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
+        //         })
+        //         .catch((error) => {
+        //             console.log(error)
+        //         })
 
         // this.setState({rewards:events.reward})
         
-        console.log(events.reward);
+        // console.log(events.reward);
         
         }
 

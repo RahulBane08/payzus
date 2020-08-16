@@ -28,14 +28,14 @@ class UITables extends React.Component{
       // const user = await firebaseApp.auth().currentUser
       // const uid = user.uid;
       await this.setState({uid:this.props.uid});
-      console.log("uid",this.props.uid) 
+      // console.log("uid",this.props.uid) 
 
       await database
               .child(this.state.uid + '/Transactions')
               .once('value', snapshot => {
                 this.setState({txArray:snapshot.val()})
               });
-              console.log(this.state.txArray)
+              // console.log(this.state.txArray)
           
    }
 

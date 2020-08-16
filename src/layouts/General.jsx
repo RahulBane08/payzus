@@ -71,7 +71,7 @@ class GeneralLayout extends React.Component{
 
                     this.setState({uid})
                 }
-                console.log(this.state.uid)
+                // console.log(this.state.uid)
             })
             
         }catch(error){
@@ -86,7 +86,7 @@ class GeneralLayout extends React.Component{
 
             const web3 = new Web3(Web3.givenProvider);
             const network = await web3.eth.net.getNetworkType();
-            console.log(network);
+            // console.log(network);
             const accounts = await web3.eth.getAccounts()
             const account = accounts[0]
 
@@ -100,13 +100,13 @@ class GeneralLayout extends React.Component{
             }
 
             await this.setState({account, walletConnected:true})
-            console.log(this.state.account)
+            // console.log(this.state.account)
 
             const accBalance = await web3.eth.getBalance(accounts[0]);
             const balance = web3.utils.fromWei(accBalance,"ether")
 
             this.setState({balance})
-            console.log(this.state.balance)
+            // console.log(this.state.balance)
         }
         else{
             swal({
