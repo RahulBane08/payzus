@@ -56,7 +56,7 @@ class UITables extends React.Component{
       Items.reverse().map((item) => 
         <tr>
           <th>.</th>
-          <th><a target="_blank" href={'https://ropsten.etherscan.io/tx/'+item}>{item}</a></th>
+          <th><a target="_blank" href={'https://etherscan.io/tx/'+item}>{item}</a></th>
         </tr>
       )
     )
