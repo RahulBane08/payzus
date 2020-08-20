@@ -30,6 +30,7 @@ class FormGrid extends React.Component{
       name:"",
       email:"",
       password:"",
+      referralCode:""
       // startDate: moment(),
       // file1:null,
       // file2:null
@@ -54,6 +55,7 @@ class FormGrid extends React.Component{
     var email = this.state.email;
     var password = this.state.password;
     var name = this.state.name;
+    var code = this.state.referralCode;
 
     if(email === "" || password === "" || name === ""){
       swal({
@@ -80,13 +82,13 @@ class FormGrid extends React.Component{
               // Email sent.
               // alert("email varification link has been sent")
               swal({
-                content: generateElement(`Email varification link is sent to your email Id. Please verify !`),
+                content: generateElement(`Email verification link is sent to your email Id. Please verify !`),
                 icon: "info",
               });
               
               database
                 .child(uid)
-                .set({Name:name, Email:email, WhiteListed: false, KYCSubmitted:false, Rewards:0, DirectReferred:0, IndirectReferred:0, Referrer:'0x00'})
+                .set({Name:name, Email:email, WhiteListed: false, KYCSubmitted:false, Rewards:0, DirectReferred:0, IndirectReferred:0, ReferrerAddress:'0x00',ParentAddress:code})
                 .then(() => {
                   database
                     .child(uid + '/Transactions')
@@ -105,7 +107,7 @@ class FormGrid extends React.Component{
           }
           
           else{
-            window.location.href= "/zestreact"+"/login";
+            window.location.href= "/login";
           }
 
           this.setState({email:"", name:"", password:""})
@@ -147,6 +149,15 @@ class FormGrid extends React.Component{
 
 
 <Form>  
+        <FormGroup row>
+          <Label htmlFor="referralCode" sm={12}>Enter Referral code</Label>
+          <Col sm={12}>
+            <Input type="text" name="name" id="referralCode" placeholder="" 
+              value={this.state.referralCode}
+              onChange={event => this.setState({referralCode:event.target.value})}
+            />
+          </Col>
+        </FormGroup>
         <FormGroup row>
           <Label htmlFor="exampleName" sm={12}>Name</Label>
           <Col sm={12}>

@@ -8,6 +8,7 @@ import UITables from 'views/general/Tables/Tables.jsx';
 
 /*import UIDatagridsort from 'views/general/Tables/Datagridsort.jsx';*/
 import UIBSDatatable from 'views/general/Tables/BSDatatable.jsx';
+import ReferSomeone from "views/general/Forms/ReferSomeone.jsx";
 
 
 
@@ -18,7 +19,7 @@ var dashRoutes = [
     { path: BASEDIR+"/dashboard", name: "Dashboard", icon: "speedometer", component: General },
 
 
-    { path: BASEDIR+"/history", name: "history", icon: "layers", component: UITables },
+    { path: BASEDIR+"/history", name: "History", icon: "layers", component: UITables },
 
     { path: BASEDIR+"/market", name: "Market", icon: "chart", component: UIBSDatatable },
 
@@ -26,7 +27,7 @@ var dashRoutes = [
 
     { path: BASEDIR+"/buy-payzus", name: "Buy Payzus", icon: "bag", component: FormPremade },
 
-
+    { path: BASEDIR+"/refer", name: "Refer Someone", icon: "bag", component: ReferSomeone },
 
    
 

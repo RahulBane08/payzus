@@ -21,6 +21,7 @@ import UITables from '../views/general/Tables/Tables.jsx';
 import GetDetails from '../views/general/Forms/GetDetails.jsx'
 import FormPremade from '../views/general/Forms/Premade.jsx'; 
 import UIBSDatatable from '../views/general/Tables/BSDatatable.jsx';
+import ReferSomeone from "../views/general/Forms/ReferSomeone.jsx";
 
 import dashboardRoutes from 'routes/general.jsx';
 import { topbarStyle, menuStyle, menuType, topbarType, navWidth } from 'variables/settings/general.jsx';
@@ -156,6 +157,7 @@ class GeneralLayout extends React.Component{
                         <Route exact path="/app/market" name="market" render={props => (<UIBSDatatable {...props} uid={this.state.uid}/>)} />
                         <Route exact path="/app/kyc" name="kyc" render={props => (<GetDetails {...props} uid={this.state.uid}/>)}/>
                         <Route exact path="/app/buy-payzus" name="buy payzus" render={props => (<FormPremade {...props} uid={this.state.uid}/>)} />
+                        <Route exact path="/app/Refer" name="refer" render={props => (<ReferSomeone {...props} uid={this.state.uid}/>)} />
 
                         
                         {/* {

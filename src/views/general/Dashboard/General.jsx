@@ -56,11 +56,12 @@ class General extends React.Component{
               const PayzusContract = new Web3.eth.Contract(PayzusContractABI,"0x86690e2613be52EE927d395dB87f69EBCdf88f27");
 
               const balance = await PayzusContract.methods.balanceOf(this.state.account).call()
+              // console.log(PayzusContract)
 
               await this.setState({tokenBalance:balance});
 
               const ReferralContract = new Web3.eth.Contract(ReferralContractABI, "0x623d2b987dcde40bc73f678b9ae57936ab32e112");
-
+              // console.log(ReferralContract)
               const result = await ReferralContract.methods.accounts(this.state.account).call();
 
               await this.setState({rewards:result.reward, directReferred:result.referredCount, indirectReferred:result.referredCountIndirect, referrerAddress:result.referrer});

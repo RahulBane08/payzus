@@ -12,6 +12,8 @@ import PerfectScrollbar from 'perfect-scrollbar';
 // import logomini from "assets/img/logo-mini.png";
 // import logofulldark from "assets/img/logo-full-dark.png";
 // import logominidark from "assets/img/logo-mini-dark.png";
+import PayzusLogo from "assets/img/Defi_logo.png";
+import PayzusLogoMini from "assets/img/Defi_logo_mini.png";
 
 var ps;
 var currentmenu = "notset";
@@ -124,37 +126,31 @@ class Sidebar extends React.Component{
             <div className="sidebar menubar" data-color="black" style={{height:'100vh'}}>
 
                 <div className="logo">
-                    {/* <a href="/" className="logo-mini">
+                    <a href="/" className="logo-mini" style={{marginTop:"5px",marginLeft:"5px"}}>
                         <div className="logo-img">
-                            <img src={logomini} alt="react-logo" className="light-logo" />
-                            <img src={logominidark} alt="react-logo" className="dark-logo"/>
+                            <img src={PayzusLogoMini} alt="react-logo" className="light-logo" height="60px"/>
+                            <img src={PayzusLogoMini} alt="react-logo" className="dark-logo" height="60px"/>
                         </div>
                     </a>
-                    <a href="/" className="logo-full">
-                            <img src={logofull} alt="react-logo" className="light-logo"/>
-                            <img src={logofulldark} alt="react-logo" className="dark-logo"/>
-                    </a> */}
+                    <a href="/" className="logo-full" style={{marginLeft:"30px",marginTop:"10px"}}>
+                            <img src={PayzusLogo} alt="react-logo" className="light-logo" height="60px" />
+                            <img src={PayzusLogo} alt="react-logo" className="dark-logo" height="60px"/>
+                    </a>
                 </div> 
                 
                 <div className="sidebar-wrapper" ref="sidebar">
-                <div className="profile-info row">
+                <div className="profile-info row" style={{height:"30px"}}>
                     <div className="profile-image col-4">
                         {/* <a href="#!"> */}
-                            <img alt="" src={this.state.profileimg} className="img-fluid avatar-image"/>
+                            {/* <img alt="" src={PayzusLogo} className="img-fluid avatar-image" style={{background:"transparent"}} /> */}
                         {/* </a> */}
                     </div>
                     <div className="profile-details col-8">
-                        <h3>
-                            <p style={{color:"#fff",fontSize:'20px', marginTop:'25px'}}>P A Y Z U S</p>
+                        {/* <h3>
+                            <p style={{color:"#fff",fontSize:'20px', marginTop:'20px'}}>P A Y Z U S</p>
                             <span className="profile-status online"></span>
-                        </h3>
-                        <p className="profile-title">
-                            {/* { 
-                            this.props.account == ""
-                            ? <span style={{color:"white"}}>MetaMask</span>
-                            : <span style={{color:"#26a69a"}}>MetaMask</span>
-                            } */}
-                        </p>
+                        </h3> */}
+    
                     </div>
                 </div>
 

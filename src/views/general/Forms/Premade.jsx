@@ -282,7 +282,7 @@ class FormPremade extends React.Component{
                                                         <div className="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-8">
                                                             <form>
                                                                 <div className="form-group">
-                                                                    <label htmlFor="inputAddress">Enter Referrer address</label>
+                                                                    <label htmlFor="inputAddress">Enter Referrer MetaMask Address</label>
                                                                         <input type="text"  className="form-control" id="inputEmail4" placeholder="" 
                                                                             value={this.state.referrerAddress}
                                                                             onChange={event => this.setState({referrerAddress:event.target.value})}

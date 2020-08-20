@@ -9,11 +9,11 @@
             homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
         -->
         <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-        <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.png">
-        <link rel="apple-touch-icon-precomposed" href="%PUBLIC_URL%/apple-touch-icon-57-precomposed.png">  
+        <link rel="icon" href="%PUBLIC_URL%/favicon.png">
+        <!-- <link rel="apple-touch-icon-precomposed" href="%PUBLIC_URL%/apple-touch-icon-57-precomposed.png">  
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="%PUBLIC_URL%/apple-touch-icon-114-precomposed.png">   
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="%PUBLIC_URL%/apple-touch-icon-72-precomposed.png">  
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="%PUBLIC_URL%/apple-touch-icon-144-precomposed.png">   
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="%PUBLIC_URL%/apple-touch-icon-144-precomposed.png">    -->
 
         <!--     Fonts and icons     -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
@@ -36,13 +36,21 @@
             .hide {
               opacity: 0;
               transition: opacity 500ms;
+              
             }
+            /* #preloader {
+                margin-top: 40vh;
+                
+            } */
           </style>
     </head>
     <body>
-        <div id="preloader">
+        <!-- <div id="preloader">
             <div id="loader"></div>
-        </div>
+        </div> -->
+        
+    <div class="spinner" id="preloader"></div>
+
         <noscript>
             You need to enable JavaScript to run this app.
         </noscript>

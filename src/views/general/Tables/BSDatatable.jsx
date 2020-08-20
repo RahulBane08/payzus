@@ -103,7 +103,7 @@ class UIBSDatatable extends React.Component{
   onSort={onSortFunction}
   labels={customLabels}
 /> */}                              <div style={{textAlign:"center", height:'200px'}}>
-                                        <h2> Coming Soon ... </h2>
+                                        <h2 style={{marginTop:"40px"}}> Coming Soon ... </h2>
                                     </div>
 
                                

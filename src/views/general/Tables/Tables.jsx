@@ -89,7 +89,7 @@ class UITables extends React.Component{
                                     <div className="col-lg-12">
                             
   
-      <h5>All recent transactions</h5><br/>
+      <h5>All Recent Transactions</h5><br/>
 
       <Table>
         <thead>

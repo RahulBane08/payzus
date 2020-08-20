@@ -11,6 +11,7 @@ import generateElement from "../../../generateElement";
 // import web3 from "web3";
 // import PayzusContractABI from "../../../contracts/pyzusReferral.json";
 import firebaseApp from '../../../firebase-config';
+import Mobile from "./countryCode";
 
 const database = firebaseApp.database().ref("Users");
 
@@ -157,16 +158,25 @@ class FormPremade extends React.Component{
                                                         <div className="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-8">
                                                             
                                                             <form>
-                                                                <div className="form-group">
-                                                                    <label htmlFor="inputAddress">Your Mobile</label>
-                                                                    <input type="text"  className="form-control" id="inputMobile" placeholder=""
-                                                                        value={this.state.mobile}
-                                                                        onChange={event => this.setState({mobile:event.target.value})}
-                                                                    />
+                                                            <label htmlFor="inputAddress">Your Mobile (With Country Code)</label>
+                                                                <div className="form-row">
+                                                                    
+                                                                    <div className="form-group col-md-3">  
+                                                                        <Mobile uid={this.state.uid}/>
+                                                                    </div>
+                                                                    <div className="form-group col-md-9">
+                                                                        
+                                                                        <input type="text"  className="form-control" id="inputMobile" placeholder=""
+                                                                            value={this.state.mobile}
+                                                                            onChange={event => this.setState({mobile:event.target.value})}
+                                                                        />
+
+                                                                    </div>
 
                                                                 </div>
+                                                                
                                                                 <div className="form-group">                                                                  
-                                                                    <label htmlFor="inputEmail4">Aadhar Number</label>
+                                                                    <label htmlFor="inputEmail4">Identity Proof Number</label>
                                                                     <input type="text" className="form-control" id="inputAadhar" placeholder=""
                                                                         value={this.state.aadharNumber}
                                                                         onChange={event => this.setState({aadharNumber:event.target.value})}
@@ -174,7 +184,7 @@ class FormPremade extends React.Component{
                                                                 </div>
                                                                 
                                                                 <div className="form-group">                                                                  
-                                                                    <label htmlFor="inputEmail4">Upload Aadhar</label>
+                                                                    <label htmlFor="inputEmail4">Identity Proof</label>
                                                                     <input type="file" className="form-control" id="uploadAadhar" multiple placeholder=""
                                                                        onChange={event => this.onFileUpload(event)}
                                                                        onClick={(e) => (e.target.value = null)}
