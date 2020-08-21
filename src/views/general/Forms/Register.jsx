@@ -82,13 +82,25 @@ class FormGrid extends React.Component{
               // Email sent.
               // alert("email varification link has been sent")
               swal({
-                content: generateElement(`Email verification link is sent to your email Id. Please verify !`),
+                content: generateElement(`Email verification link is sent to your Email Id. Please verify !`),
                 icon: "info",
               });
               
               database
                 .child(uid)
-                .set({Name:name, Email:email, WhiteListed: false, KYCSubmitted:false, Rewards:0, DirectReferred:0, IndirectReferred:0, ReferrerAddress:'0x00',ParentAddress:code})
+                .set({Name:name,
+                      Email:email, 
+                      WhiteListed: false, 
+                      KYCSubmitted:false, 
+                      Rewards:0, 
+                      DirectReferred:0, 
+                      IndirectReferred:0, 
+                      ParentAddress:code,
+                      FirstPersonRewards:0,
+                      SecondPersonRewards:0,
+                      ThirdPersonRewards:0,
+                      FourthPersonRewards:0,
+                    })
                 .then(() => {
                   database
                     .child(uid + '/Transactions')

@@ -12,6 +12,7 @@ import {
 import swal from "sweetalert";
 import generateElement from "../../../generateElement";
 import firebaseApp from "../../../firebase-config";
+import ResetPassword from "./ResetPassword";
 
 
 class FormGrid extends React.Component{
@@ -242,7 +243,9 @@ class FormGrid extends React.Component{
             <Button onClick={() => this.handleRegister(this.state.email, this.state.password)}>Submit</Button>
         </FormGroup> */}
       </Form>
+      <ResetPassword />
       <Button onClick={(event) => this.handleLogin(event)} color="primary" style={{width:'150px'}}>Login</Button>
+      
       {/* <Button onClick={(event) => this.final(event)}>final</Button> */}
       
       {/* <Button onClick={this.handleLoginWithGoogle}>Login With Google</Button> */}

@@ -5,13 +5,8 @@ import { Nav } from 'reactstrap';
 import { Navmenudropdown } from 'components';
 import { Navmenugroup } from 'components';
 
-// javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from 'perfect-scrollbar';
-//import useravatar from "assets/img/profile.jpg";
-// import logofull from "assets/img/logo-full.png";
-// import logomini from "assets/img/logo-mini.png";
-// import logofulldark from "assets/img/logo-full-dark.png";
-// import logominidark from "assets/img/logo-mini-dark.png";
+
 import PayzusLogo from "assets/img/Defi_logo.png";
 import PayzusLogoMini from "assets/img/Defi_logo_mini.png";
 
@@ -38,7 +33,6 @@ class Sidebar extends React.Component{
 
 
     handlecurrent(currentmenu) {   
-       //console.log("handlecurrent"+currentmenu);
        if(this.state.opendd !== ""){
            currentmenu = ""; 
        }
@@ -55,12 +49,10 @@ class Sidebar extends React.Component{
                 opendd: open    
             });  
         }
-        //currentmenu = "";
-        //console.log(open + this.state.opendd);
+        
     }
     
 
-    // verifies if routeName is the one active (in browser input)
     activeRoute(routeName) {
         return this.props.location.pathname.indexOf(routeName) > -1 ? ' active' : '';
     }
@@ -78,16 +70,14 @@ class Sidebar extends React.Component{
         if(navigator.platform.indexOf('Win') > -1){
             ps = new PerfectScrollbar(this.refs.sidebar,{suppressScrollX: true, suppressScrollY: false});
         }
-
-        //console.log(this.props.location.pathname);
-
-
     }
+
     componentWillUnmount(){
         if(navigator.platform.indexOf('Win') > -1){
             ps.destroy();
         }
     }
+    
     render(){
         
         const children = (child, parent) => {
@@ -141,15 +131,9 @@ class Sidebar extends React.Component{
                 <div className="sidebar-wrapper" ref="sidebar">
                 <div className="profile-info row" style={{height:"30px"}}>
                     <div className="profile-image col-4">
-                        {/* <a href="#!"> */}
-                            {/* <img alt="" src={PayzusLogo} className="img-fluid avatar-image" style={{background:"transparent"}} /> */}
-                        {/* </a> */}
+
                     </div>
                     <div className="profile-details col-8">
-                        {/* <h3>
-                            <p style={{color:"#fff",fontSize:'20px', marginTop:'20px'}}>P A Y Z U S</p>
-                            <span className="profile-status online"></span>
-                        </h3> */}
     
                     </div>
                 </div>

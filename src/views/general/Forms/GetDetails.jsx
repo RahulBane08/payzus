@@ -34,28 +34,14 @@ class FormPremade extends React.Component{
 
     componentDidMount = async () => {
 
-        // let uid;
-
-        // await firebaseApp.auth().onAuthStateChanged(function(user) {
-        //     if(user){
-        //         user = firebaseApp.auth().currentUser;
-        //         uid = user.uid;
-        //     }
-        // })
-
         await this.setState({uid:this.props.uid});
-
-        // console.log(this.state.uid);
 
         await database
             .child(this.state.uid + '/KYCSubmitted')
             .once('value', snapshot => {
                 this.setState({kycStatus:snapshot.val()});
-                // console.log(snapshot.val())
+               
             })
-
-            // console.log(this.state.kycStatus);
-       
     }
 
     onFileUpload = (event) => {

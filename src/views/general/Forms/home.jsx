@@ -9,14 +9,6 @@ import BImage from "assets/img/img.png";
 export default class home extends Component {
     render() {
         return (
-            // <div style={{height:"430px",textAlign:"center", marginTop:'100px'}}>
-            //     <h1 >where to go now??</h1>
-            //     <h3>Simply just register yourself and start using payzus</h3>
-            //     <a target="_blank" href="#!">
-
-            //         <img src={BImage} width="600px" height="300px"/>
-            //     </a>
-            // </div>
             <div>
                 <div className="content">
                     <Row>

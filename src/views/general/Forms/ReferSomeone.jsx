@@ -57,7 +57,7 @@ class ReferSomeone extends React.Component{
                                     <div className="col-12">
                                         <section className="box ">
                                             <header className="panel_header" >
-                                                <h2 className="title float-left">Refer SomeOne to earn Rewards</h2>
+                                                <h2 className="title float-left">Refer SomeOne to earn pzs Rewards</h2>
                                                 
                                             </header>
                                             <div className="content-body">
@@ -66,8 +66,8 @@ class ReferSomeone extends React.Component{
                                                         
                                                             <div className="form-row">
                                                                 <div className="form-group col-md-8">
-                                                                    <label htmlFor="referralCode">Your Referral code is</label>
-                                                                    <input type="text"  className="form-control" id="referralCode" placeholder="" 
+                                                                    <label htmlFor="referralCode">Your Referral Code Is</label>
+                                                                    <input type="text" readOnly className="form-control" id="referralCode" placeholder="" 
                                                                         value={this.state.uid}
                                                                         ref={(code) => this.referrralCode = code}
 

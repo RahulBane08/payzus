@@ -5,20 +5,14 @@ import { Nav } from 'reactstrap';
 import { Navmenudropdown } from 'components';
 import { Navmenugroup } from 'components';
 
-// javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from 'perfect-scrollbar';
-//import useravatar from "assets/img/profile.jpg";
-// import logofull from "assets/img/logo-full.png";
-// import logomini from "assets/img/logo-mini.png";
-// import logofulldark from "assets/img/logo-full-dark.png";
-// import logominidark from "assets/img/logo-mini-dark.png";
+
 import userImage from "assets/img/icon1.jpg";
 
 
 var ps;
 var currentmenu = "notset";
 
-// var IMGDIR = process.env.REACT_APP_IMGDIR;
 
 class Sidebar extends React.Component{
     constructor(props){
@@ -126,24 +120,15 @@ class Sidebar extends React.Component{
             <div className="sidebar menubar" data-color="black" style={{height:'100%'}}>
 
                 <div className="logo">
-                    {/* <a href="/" className="logo-mini">
-                        <div className="logo-img">
-                            <img src={logomini} alt="react-logo" className="light-logo" />
-                            <img src={logominidark} alt="react-logo" className="dark-logo"/>
-                        </div>
-                    </a>
-                    <a href="/" className="logo-full">
-                            <img src={logofull} alt="react-logo" className="light-logo"/>
-                            <img src={logofulldark} alt="react-logo" className="dark-logo"/>
-                    </a> */}
+                   
                 </div> 
                 
                 <div className="sidebar-wrapper" ref="sidebar">
                 <div className="profile-info row">
                     <div className="profile-image col-4">
-                        {/* <a href="#!"> */}
-                            <img alt="" src={userImage} className="img-fluid avatar-image" style={{background:"transparent"}}/>
-                        {/* </a> */}
+                        
+                        <img alt="" src={userImage} className="img-fluid avatar-image" style={{background:"transparent"}}/>
+                       
                     </div>
                     <div className="profile-details col-8">
                         <h3>

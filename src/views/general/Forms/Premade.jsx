@@ -25,13 +25,15 @@ class FormPremade extends React.Component{
             account:null,
             Web3:null,
             loading:false,
-            referrerAddress:"",
+            // referrerAddress:"",
             tokenNumbers:250,
             price:0,
-            // rewardsCredited:true,
-            // rewards:0,
             WhiteListed:false,
-            uid:null
+            uid:null,
+            firstParentUid:"",
+            secondParentUid:"",
+            thirdParentUid:"",
+            fourthParentUid:"",
             
         }
         
@@ -42,7 +44,7 @@ class FormPremade extends React.Component{
         try{
                await this.setState({uid:this.props.uid})     
             
-                    database
+                    await database
                         .child(this.state.uid +'/WhiteListed')
                         .once("value", (snapshot) => {
             
@@ -53,7 +55,67 @@ class FormPremade extends React.Component{
                         })
                                       
                 
+                    await database
+                            .child(this.state.uid + '/ParentAddress')
+                            .once("value",(first) => {
+                                
+                                if(first.val() != ""){
+                                    this.setState({firstParentUid:first.val()}, () => {
+                                    console.log("first parent",this.state.firstParentUid);
+                                        
+                                        database
+                                            .child(this.state.firstParentUid + '/ParentAddress')
+                                            .once("value", (second) => {
 
+                                                if(second.val() != ""){
+                                                    this.setState({secondParentUid:second.val()}, () => {
+                                                        console.log("second parent",this.state.secondParentUid);
+
+                                                        database
+                                                            .child(this.state.secondParentUid + "/ParentAddress")
+                                                            .once("value", (third) => {
+
+                                                                if(third.val() != ""){
+                                                                    this.setState({thirdParentUid:third.val()}, () => {
+                                                                        console.log("third parent",this.state.thirdParentUid);
+
+                                                                        database
+                                                                            .child(this.state.thirdParentUid + '/ParentAddress')
+                                                                            .once("value", fourth => {
+
+                                                                                if(fourth.val() != ""){
+                                                                                    this.setState({fourthParentUid:fourth.val()}, () => {
+                                                                                        console.log("Fourth parent", this.state.fourthParentUid);
+                                                                                    })
+                                                                                }
+                                                                                else{
+                                                                                    console.log("No fourth parent");
+                                                                                }
+                                                                            })
+                                                                    })
+                                                                }
+
+                                                                else{
+                                                                    console.log("No third Parent");
+                                                                }
+                                                            })
+                                                    })
+
+                                                }
+
+                                                else{
+                                                    console.log("No second Parent");
+                                                }
+                                            })
+                                    })
+
+                                    
+                                }
+                                else{
+                                    console.log("No first parent");
+                                }
+                                
+                            })
            
             
             const Web3 = new web3(web3.givenProvider);
@@ -71,15 +133,11 @@ class FormPremade extends React.Component{
                 return
             }
 
-
-            const ReferralContract = new Web3.eth.Contract(ReferralContractABI,"0x623d2b987dcde40bc73f678b9ae57936ab32e112");
-            // this.setState({ReferralContract})
-
-            // console.log(this.state.ReferralContract)
-            
+            const ReferralContract = new Web3.eth.Contract(ReferralContractABI,"0x1436405e8a722Dcd9CD1bEb0C93444E219f89924");
             
             this.setState({ReferralContract, account, Web3 })
-            // console.log(temp)
+
+            // this.handleCredit(100);
             
         }
 
@@ -90,42 +148,106 @@ class FormPremade extends React.Component{
 
     getValue = (value) => {
         this.setState({WhiteListed:value})
-        // console.log(this.state.WhiteListed)
-        
+    
     }
 
-    // getUid = (value) => {
-    //     this.setState({uid:value})
-    //     console.log(this.state.uid)
-    // }
+    handleCredit = async(value) => {
+        const firstParentAmount = (value * 0.1);
+        const secondParentAmount = (value * 0.05);
+        const thirdParentAmount = (value * 0.03);
+        const fourthParentAmount = (value * 0.02);
+        var count1;
+        var count2;
+        var count3;
+        var count4;
 
-    handleReferrence = async () => {
+        if(this.state.firstParentUid != ""){
+            database
+                .child(this.state.firstParentUid + "/FirstPersonRewards")
+                .once("value", snapshot1 => {
+                    count1 = snapshot1.val()
+                })
+                .then(() => {
+                    database
+                        .child(this.state.firstParentUid)
+                        .update({FirstPersonRewards: firstParentAmount + count1 })
+                        .then(() => {
+                            if(this.state.secondParentUid != ""){
+                                database
+                                    .child(this.state.secondParentUid + "/SecondPersonRewards")
+                                    .once("value", snapshot2 => {
+                                        count2 = snapshot2.val()
+                                    })
+                                    .then(() => {
+                                        database
+                                            .child(this.state.secondParentUid)
+                                            .update({SecondPersonRewards:secondParentAmount + count2})
+                                            .then(() => {
+                                                if(this.state.thirdParentUid != ""){
+                                                    database
+                                                        .child(this.state.thirdParentUid + "/ThirdPersonRewards")
+                                                        .once("value", snapshot3 => {
+                                                            count3 = snapshot3.val()
+                                                        })
+                                                        .then(() => {
+                                                            database
+                                                                .child(this.state.thirdParentUid)
+                                                                .update({ThirdPersonRewards: thirdParentAmount + count3})
+                                                                .then(() => {
+                                                                    if(this.state.fourthParentUid != ""){
 
-        if(this.state.referrerAddress === ""){
-            swal({
-                content:generateElement(`Enter the referral address first`),
-                icon:"error"
-            });
+                                                                        database
+                                                                            .child(this.state.fourthParentUid + "/FourthPersonRewards")
+                                                                            .once("value", snapshot4 => {
+                                                                                count4 = snapshot4.val()
+                                                                            })
+                                                                            .then(() => {
+                                                                                database
+                                                                                    .child(this.state.fourthParentUid)
+                                                                                    .update({FourthPersonRewards: fourthParentAmount + count4})
+                                                                            })
+                                                                            .catch(error => {
+                                                                                console.log(error)
+                                                                            })
+                                                                    }
+                                                                    else{
+                                                                        return;
+                                                                    }
+                                                                })
+                                                                .catch(error => {
+                                                                    console.log(error)
+                                                                })
+                                                                
+                                                        })
+                                                        .catch(error => {
+                                                            console.log(error)
+                                                        })
+                                                }
+                                                else{
+                                                    return;
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.log(error)
+                                            })
+                                    })
+                                    .catch(error => {
+                                        console.log(error)
+                                    })
+                            }
+                            else{
+                                return;
+                            }
+                        })
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+
+        else{
             return;
         }
-        // console.log(this.state.referrerAddress);
-
-        const result = await this.state.ReferralContract.methods.addReferrer(this.state.referrerAddress)
-            .send({from : this.state.account});
-
-        // console.log(result);
-
-        swal({
-            content:generateElement(`Referral code Applied`),
-            icon:"success"
-        });
-
-        this.reset();
-        
-    }
-
-    reset = async () => {
-        await this.setState({referrerAddress:""})
     }
 
     handleTokenChange = async (value) => {
@@ -134,6 +256,7 @@ class FormPremade extends React.Component{
 
         this.priceOf(this.state.tokenNumbers)
     }
+
 
     priceOf = async(value) => {
         if(value === null){
@@ -144,6 +267,7 @@ class FormPremade extends React.Component{
         await this.setState({price})
         // console.log(this.state.price)
     }
+
 
     handleBuyPayzus = async () => {
 
@@ -191,10 +315,14 @@ class FormPremade extends React.Component{
                     
                     .then(() => {
                         this.setState({loading:false}, () => {
-                            swal({
-                                content:generateElement(`Transaction successfull`),
-                                icon:"success"
-                            })
+                            if(result != null){
+                                swal({
+                                    content:generateElement(`Transaction successfull`),
+                                    icon:"success"
+                                })
+                                this.handleCredit(tokens);
+                            }
+                            
                         })
                         
                     })
@@ -203,47 +331,21 @@ class FormPremade extends React.Component{
     
         
 
-        await this.setState({rewardsCredited:false})
+        // await this.setState({rewardsCredited:false})
 
-        const events = await this.state.ReferralContract.methods.accounts(this.state.account).call()
+        // const events = await this.state.ReferralContract.methods.accounts(this.state.account).call()
 
-            // swal({
-            //     content:generateElement(`Transaction Successful`),
-            //     icon:"success"
-            // });
-
-        // await this.setState({rewardsCredited:true})
-        // console.log(events);
-
-        // await database
-        //         .child(this.state.uid)
-        //         .update({Rewards:events.reward, DirectReferred:events.referredCount, IndirectReferred:events.referredCountIndirect, Referrer:(events.referrer / (10 ** 18))})
-        //         .then(() => {
-        //             this.setState({loading:false},() => {
-        //                 swal({
-        //                     content:generateElement(`Transaction Successful`),
-        //                     icon:"success"
-        //                 });
-        //             }) 
-                    
-        //         })
-        //         .catch((error) => {
-        //             console.log(error)
-        //         })
-
-        // this.setState({rewards:events.reward})
+       
         
-        // console.log(events.reward);
-        
-        }
-
-        }
-        
-        else{
-            return;
         }
 
     }
+        
+    else{
+        return;
+    }
+
+}
 
     render(){
 
@@ -266,39 +368,11 @@ class FormPremade extends React.Component{
                                         <section className="box ">
                                             <header className="panel_header" >
                                                 <h2 className="title float-left"></h2>
-                                                {/* {
-                                                    this.state.rewardsCredited
-                                                    ? (
-                                                        <div style={{float:"right",paddingTop:10,paddingRight:50}}>Rewards : {this.state.rewards}</div>
-                                                    )
-                                                    : (
-                                                        <div style={{float:"right",paddingTop:10,paddingRight:50}}>Fetching Rewards</div> 
-                                                    )
-                                                } */}
                                                 
                                             </header>
                                             <div className="content-body">
                                                 <div className="row">
                                                         <div className="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-8">
-                                                            <form>
-                                                                <div className="form-group">
-                                                                    <label htmlFor="inputAddress">Enter Referrer MetaMask Address</label>
-                                                                        <input type="text"  className="form-control" id="inputEmail4" placeholder="" 
-                                                                            value={this.state.referrerAddress}
-                                                                            onChange={event => this.setState({referrerAddress:event.target.value})}
-                                                                        />
-
-                                                                </div>
-                                                                
-                                                            </form>
-                                                            <div className="col-md-12" style={{textAlign:"center",marginTop:'20px'}}>
-                                                                <button type="submit" className="btn btn-primary" 
-                                                                    onClick={this.handleReferrence}
-                                                                    style={{width:'150px'}}
-                                                                >
-                                                                    Avail Referral
-                                                                </button>
-                                                            </div>        
 
                                                             <form>
                                                                 <div className="form-group">
