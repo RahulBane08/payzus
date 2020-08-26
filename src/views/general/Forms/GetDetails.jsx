@@ -14,6 +14,7 @@ import firebaseApp from '../../../firebase-config';
 import Mobile from "./countryCode";
 
 const database = firebaseApp.database().ref("Users");
+const StorageRef = firebaseApp.storage().ref('Images');
 
 class FormPremade extends React.Component{
     constructor(props){
@@ -22,10 +23,12 @@ class FormPremade extends React.Component{
         this.state = {
             uid:"",
             mobile:"",
-            aadharNumber:"",
-            aadharFile1:null,
-            aadharFile2:null,
-            kycStatus:null
+            photoIdNumber:"",
+            IdFile1:null,
+            IdFile2:null,
+            kycStatus:null,
+            IdURL1:"",
+            IdURL2:""
             
 
         }
@@ -50,9 +53,9 @@ class FormPremade extends React.Component{
 
         files.length === 2 
         ?   
-           this.setState({aadharFile1: files[0], aadharFile2:files[1]}, () => {
-            //    console.log(this.state.aadharFile1) 
-            //    console.log(this.state.aadharFile2)
+           this.setState({IdFile1: files[0], IdFile2:files[1]}, () => {
+               console.log(this.state.IdFile1) 
+               console.log(this.state.IdFile2)
             })
             // this.setState({aadharFile2: files[1]}, () => {console.log(this.state.aadharFile2)})
            
@@ -68,14 +71,22 @@ class FormPremade extends React.Component{
    
     }
 
-    handleSubmit = () => {
+    // getUrl = (value) => {
+    //     this.setState({IdURL1:value},() => {
+    //         console.log(this.state.IdURL1)
+    //     })
+    // }
+
+    handleSubmit = async() => {
 
         var mobile = this.state.mobile;
-        var aadharNumber = this.state.aadharNumber;
-        var aadharFile1 = this.state.aadharFile1;
-        var aadharFile2 = this.state.aadharFile2;
+        var photoIdNumber = this.state.photoIdNumber;
+        var IdFile1 = this.state.IdFile1;
+        var IdFile2 = this.state.IdFile2;
+        var URL1;
+        var URL2;
 
-        if(mobile === "" || aadharNumber === "" || aadharFile1 === null || aadharFile2 === null){
+        if(mobile === "" || photoIdNumber === "" ){
             swal({
                 content: generateElement(`Please fill all the details first`),
                 icon: "error",
@@ -83,7 +94,7 @@ class FormPremade extends React.Component{
             return;
         }
 
-        if(aadharFile1 === null || aadharFile2 === null){
+        if(IdFile1 === null || IdFile2 === null){
             swal({
                 content: generateElement(`Please upload 2 files both front and back`),
                 icon: "error",
@@ -92,9 +103,44 @@ class FormPremade extends React.Component{
             return;
         }
 
-        database
+        var uploadTask1 = StorageRef.child(this.state.uid + "/File1").put(IdFile1);
+        var uploadTask2 = StorageRef.child(this.state.uid + "/File2").put(IdFile2);
+
+        await uploadTask1.on('state_changed', function(snapshot) {
+
+            var progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+            // console.log("upload is "+ progress +" done");
+        },function(error) {
+            console.log(error);
+        },
+         function() {
+            uploadTask1.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                // console.log(downloadURL);
+                URL1 = downloadURL;
+            })
+        })
+
+        
+
+        await uploadTask2.on('state_changed', function(snapshot) {
+
+            var progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+            // console.log("upload is "+ progress +" done");
+        },function(error) {
+            console.log(error);
+        },
+         function() {
+            uploadTask2.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                // console.log(downloadURL);
+                URL2 = downloadURL;
+            })
+        })
+
+        
+
+        await database
             .child(this.state.uid)
-            .update({Mobile:mobile, AadharNumber: aadharNumber, AadharFile1: aadharFile1, AadharFile2: aadharFile2 ,KYCSubmitted:true})
+            .update({Mobile:mobile, PhotoIdNumber: photoIdNumber,KYCSubmitted:true})
             .then(() => {
 
                 swal({
@@ -120,7 +166,7 @@ class FormPremade extends React.Component{
                         <Col xs={12} md={12}>
                             <div className="page-title">
                                 <div className="float-left">
-                                    <h1 className="title">Get Your KYC Done</h1>
+                                    <h1 className="title">Get Your KYC Done For Widhdrawing PZS Rewards</h1>
                                 </div>
                             </div>
                             {
@@ -165,7 +211,7 @@ class FormPremade extends React.Component{
                                                                     <label htmlFor="inputEmail4">Identity Proof Number</label>
                                                                     <input type="text" className="form-control" id="inputAadhar" placeholder=""
                                                                         value={this.state.aadharNumber}
-                                                                        onChange={event => this.setState({aadharNumber:event.target.value})}
+                                                                        onChange={event => this.setState({photoIdNumber:event.target.value})}
                                                                     />                                                                                                                                     
                                                                 </div>
                                                                 

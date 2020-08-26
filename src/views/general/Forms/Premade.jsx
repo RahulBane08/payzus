@@ -359,10 +359,10 @@ class FormPremade extends React.Component{
                                     <h1 className="title">Buy PayZus</h1>
                                 </div>
                             </div>
-
+{/* 
                             {
                                 (this.state.WhiteListed) ? 
-                                (
+                                ( */}
                                 <div className="row margin-0">
                                     <div className="col-12">
                                         <section className="box ">
@@ -433,15 +433,7 @@ class FormPremade extends React.Component{
                                         </section>
                                     </div>
                                 </div>
-                                )
-                                :
-                                (
-                                    <div style={{textAlign:"center"}}>
-                                        <h2> Complete your KYC <br /> and then please wait untill you are WhiteListed</h2>
-                                    </div>
-                                    
-                                )
-                            }
+                            
                                                             
                         </Col>
                     </Row>

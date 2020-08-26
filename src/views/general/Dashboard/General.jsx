@@ -42,6 +42,7 @@ class General extends React.Component{
         directReferred:0,
         indirectReferred:0,
         referrerAddress:"0x00",
+        referrerName:"",
         tokenBalance:0,
         account:null
       };
@@ -97,14 +98,22 @@ class General extends React.Component{
 
                       }, () => {
 
-                        this.setState({rewards:  
-                          this.state.firstPersonRewards + 
-                          this.state.secondPersonRewards + 
-                          this.state.thirdPersonRewards +
-                          this.state.fourthPersonRewards}, () => {
-                            database
-                              .child(uid)
-                              .update({Rewards:this.state.rewards})
+                        database
+                          .child(this.state.referrerAddress + "/Name")
+                          .once("value", name => {
+                            this.state.referrerName = name.val();
+                          })
+                          .then(() => {
+
+                              this.setState({rewards:  
+                              this.state.firstPersonRewards + 
+                              this.state.secondPersonRewards + 
+                              this.state.thirdPersonRewards +
+                              this.state.fourthPersonRewards}, () => {
+                                database
+                                  .child(uid)
+                                  .update({Rewards:this.state.rewards})
+                              })
                           })
                         
                       });
@@ -224,7 +233,7 @@ class General extends React.Component{
                                                                       <p><li>Third Level Rewards    <span style={{float:"right"}}>{(this.state.fourthPersonRewards)} PZS</span></li></p>
                                                                       {/* <p><li>Direct Referred                <span style={{float:"right"}}>{this.state.directReferred}</span></li></p>
                                                                       <p><li>Indirect Referred              <span style={{float:"right"}}>{this.state.indirectReferred}</span></li></p> */}
-                                                                      <p><li>Your Referrer                  <span style={{float:"right"}}>{this.truncate(this.state.referrerAddress)}</span></li></p>
+                                                                      <p><li>Your Referrer                  <span style={{float:"right"}}>{this.state.referrerName}</span></li></p>
                                                                     </ul>
                                                             
                                                                     

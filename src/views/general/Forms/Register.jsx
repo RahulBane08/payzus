@@ -30,7 +30,7 @@ class FormGrid extends React.Component{
       name:"",
       email:"",
       password:"",
-      referralCode:""
+      referralCode:"",
       // startDate: moment(),
       // file1:null,
       // file2:null
@@ -100,6 +100,7 @@ class FormGrid extends React.Component{
                       SecondPersonRewards:0,
                       ThirdPersonRewards:0,
                       FourthPersonRewards:0,
+                      CountryCode:91
                     })
                 .then(() => {
                   database
@@ -162,7 +163,7 @@ class FormGrid extends React.Component{
 
 <Form>  
         <FormGroup row>
-          <Label htmlFor="referralCode" sm={12}>Enter Referral code</Label>
+          <Label htmlFor="referralCode" sm={12}>Enter Referral code of your sponsor (If not please leave it blank)</Label>
           <Col sm={12}>
             <Input type="text" name="name" id="referralCode" placeholder="" 
               value={this.state.referralCode}
