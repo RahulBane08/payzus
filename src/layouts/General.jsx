@@ -125,8 +125,8 @@ class GeneralLayout extends React.Component{
 
     menuSettings(val1,val2) {
         this.setState({
-          menuColor: "black",
-          menuType: "dark",
+          menuColor: "transparent",
+          menuType: "white",
         });
     }
     topbarSettings(val1,val2) {
