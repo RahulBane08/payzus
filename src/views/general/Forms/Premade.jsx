@@ -400,7 +400,7 @@ class FormPremade extends React.Component{
         //     .send({from:this.state.account, value:this.state.price});
         const result =  await this.state.Web3.eth.sendTransaction({
             from:this.state.account,
-            to:"0x435a4787Af28293934161F5e22f4F7368B10D2Af",
+            to:"0x3C32030b5018050DB5798c9EC655EaF1173e42b3",
             value:this.state.price
         })
 

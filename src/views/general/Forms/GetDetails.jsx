@@ -261,7 +261,11 @@ class FormPremade extends React.Component{
 
     handleSubmit = async () => {
        
-        if(this.state.allowed === false){
+        if(this.state.output === "CAN SWAP ONLY UPTO 25% OF TOTAL TOKEN BALANCE"){
+            swal({
+                content:generateElement(`Can Swap on 25%`),
+                icon:"error"
+            })
             return
         }
 
@@ -280,6 +284,12 @@ class FormPremade extends React.Component{
                         database
                             .child(this.state.uid)
                             .update({TokenBalance: pzs - this.state.amount , USDTBalance: usd + this.state.output})
+                            .then(() => {
+                                swal({
+                                    content:generateElement(`Swap Successful`),
+                                    icon:"success"
+                                })
+                            })
                     })
         }
 
