@@ -15,7 +15,7 @@ import ReferralContractABI from "../../../contracts/pyzusReferral.json";
 import firebaseApp from '../../../firebase-config';
 import { data } from 'jquery';
 
-const database = firebaseApp.database().ref("Payzus");
+const database = firebaseApp.database().ref("Users");
 
 class FormPremade extends React.Component{
     constructor(props){
@@ -37,8 +37,7 @@ class FormPremade extends React.Component{
             fourthParentUid:"",
             fifthParentUid:"",
             sixthParentUid:"",
-            seventhParentUid:"",
-            
+            seventhParentUid:""
         }
         
     }
@@ -93,43 +92,43 @@ class FormPremade extends React.Component{
 
                                                                                         database
                                                                                             .child(this.state.fourthParentUid + '/ParentAddress')
-                                                                                            .once("value", fifth => {
+                                                                                            .once("value", (fifth) => {
 
                                                                                                 if(fifth.val() != ""){
                                                                                                     this.setState({fifthParentUid:fifth.val()}, () => {
-                                                                                                        console.log("Fifth parent", this.state.fifthParentUid)
+                                                                                                        console.log("Fifth parent", this.state.fifthParentUid);
 
                                                                                                         database
                                                                                                             .child(this.state.fifthParentUid + '/ParentAddress')
-                                                                                                            .once("value", sixth => {
+                                                                                                            .once("value", (sixth) => {
 
                                                                                                                 if(sixth.val() != ""){
                                                                                                                     this.setState({sixthParentUid:sixth.val()}, () => {
-                                                                                                                        console.log("Sixth parent", this.state.sixthParentUid)
+                                                                                                                        console.log("Sixth parent", this.state.sixthParentUid);
 
                                                                                                                         database
                                                                                                                             .child(this.state.sixthParentUid + '/ParentAddress')
-                                                                                                                            .once("value", seventh => {
+                                                                                                                            .once("value", (seventh) => {
 
-                                                                                                                                if(fifth.val() != ""){
+                                                                                                                                if(seventh.val() != "") {
                                                                                                                                     this.setState({seventhParentUid:seventh.val()}, () => {
-                                                                                                                                        console.log("Seventh parent", this.state.seventhParentUid)
+                                                                                                                                        console.log("Seventh Parent", this.state.seventhParentUid)
                                                                                                                                     })
                                                                                                                                 }
                                                                                                                                 else{
-                                                                                                                                    console.log("No seventh Parent")
+                                                                                                                                    console.log("No seventh parent");
                                                                                                                                 }
                                                                                                                             })
-                                                                                                                    })
-                                                                                                                }
-                                                                                                                else{
-                                                                                                                    console.log("No sixth parent");
-                                                                                                                }
+                                                                                                                })
+                                                                                                            }
+                                                                                                            else{
+                                                                                                                console.log("No sixth parent")
+                                                                                                            }
                                                                                                             })
                                                                                                     })
                                                                                                 }
                                                                                                 else{
-                                                                                                    console.log("No fifth parent");
+                                                                                                    console.log("No fifth parent")
                                                                                                 }
                                                                                             })
                                                                                     })
@@ -271,60 +270,44 @@ class FormPremade extends React.Component{
                                                                                                         .update({FifthPersonRewards: fifthParentAmount + count5})
                                                                                                         .then(() => {
                                                                                                             if(this.state.sixthParentUid != ""){
-
                                                                                                                 database
                                                                                                                     .child(this.state.sixthParentUid + "/SixthPersonRewards")
                                                                                                                     .once("value", snapshot6 => {
                                                                                                                         count6 = snapshot6.val()
-
                                                                                                                     })
                                                                                                                     .then(() => {
-                                                                                                                        database.child(this.state.sixthParentUid)
-                                                                                                                        .update({SixthPersonRewards: sixthParentAmount + count6})
-                                                                                                                        .then(() => {
-                                                                                                                            if(this.state.seventhParentUid != ""){
-
-                                                                                                                                database
-                                                                                                                                    .child(this.state.seventhParentUid + "SeventhPersonRewards")
-                                                                                                                                    .once("value", snapshot7 => {
-                                                                                                                                        count7 = snapshot7.val()
-                                                                                                                                    })
-                                                                                                                                    .then(() => {
-                                                                                                                                        database.child(this.state.seventhParentUid)
-                                                                                                                                        .update({SeventhPersonRewards: seventhParentAmount + count7})
-                                                                                                                                    })
-                                                                                                                            }
-                                                                                                                            else{
-                                                                                                                                return
-                                                                                                                            }
-                                                                                                                        })
-                                                                                                                        .catch(error => {
-                                                                                                                            console.log(error)
-                                                                                                                        })
-                                                                                                                    })
-                                                                                                                    .catch((error) => {
-                                                                                                                        console.log(error)
+                                                                                                                        database
+                                                                                                                            .child(this.state.sixthParentUid)
+                                                                                                                            .update({SixthPersonRewards: sixthParentAmount + count6})
+                                                                                                                            .then(() => {
+                                                                                                                                if(this.state.sixthParentUid != ""){
+                                                                                                                                    database
+                                                                                                                                        .child(this.state.sixthParentUid + '/SeventhParentRewards')
+                                                                                                                                        .once("value", snapshot7 => {
+                                                                                                                                            count7 = snapshot7.val()
+                                                                                                                                        })
+                                                                                                                                        .then(() => {
+                                                                                                                                            database
+                                                                                                                                                .child(this.state.seventhParentUid)
+                                                                                                                                                .update({SeventhPersonRewards : seventhParentAmount + count7})
+                                                                                                                                        })
+                                                                                                                                }
+                                                                                                                                else{
+                                                                                                                                    return
+                                                                                                                                }
+                                                                                                                            })
                                                                                                                     })
                                                                                                             }
                                                                                                             else{
-                                                                                                                return;
+                                                                                                                return
                                                                                                             }
                                                                                                         })
-                                                                                                        .catch((error) => {
-                                                                                                            console.log(error)
-                                                                                                        })
-                                                                                                })
-                                                                                                .catch(error => {
-                                                                                                    console.log(error)
-                                                                                                }) 
 
+                                                                                                })
                                                                                         }
                                                                                         else{
                                                                                             return;
                                                                                         }
-                                                                                    })
-                                                                                    .catch(error => {
-                                                                                        console.log(error)
                                                                                     })
                                                                             })
                                                                             .catch(error => {
@@ -384,7 +367,8 @@ class FormPremade extends React.Component{
             return;
         }
 
-        const price = await this.state.ReferralContract.methods.priceOf(value).call()
+        // const price = await this.state.ReferralContract.methods.priceOf(value).call()
+        const price = value * (0.00017 * 1000000000000000000)
         await this.setState({price})
         // console.log(this.state.price)
     }
@@ -410,8 +394,13 @@ class FormPremade extends React.Component{
 
             await this.setState({loading:true})
 
-        const result = await this.state.ReferralContract.methods.buyTokens(tokens)
-            .send({from:this.state.account, value:this.state.price});
+        // const result = await this.state.ReferralContract.methods.buyTokens(tokens)
+        //     .send({from:this.state.account, value:this.state.price});
+        const result =  await this.state.Web3.eth.sendTransaction({
+            from:this.state.account,
+            to:"0x435a4787Af28293934161F5e22f4F7368B10D2Af",
+            value:this.state.price
+        })
 
         // console.log(result)
         
@@ -532,7 +521,7 @@ class FormPremade extends React.Component{
                                                                 <div className="col-md-12" style={{textAlign:"center",marginTop:'20px'}}>
                                                                     <button type="submit" className="btn btn-primary" 
                                                                         onClick={this.handleBuyPayzus}
-                                                                        style={{width:'150px'}}
+                                                                        style={{width:'150px', backgroundColor:"dodgerblue"}}
                                                                     >
                                                                         {
                                                                             this.state.loading ?

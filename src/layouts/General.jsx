@@ -146,6 +146,7 @@ class GeneralLayout extends React.Component{
     render(){
         return (
             <div className="wrapper" ref="themeWrapper" data-menu={this.state.menuColor} data-topbar={this.state.topbarColor} data-menutype={this.state.menuType} data-topbartype={this.state.topbarType}>
+            <div className="wrapper" ref="themeWrapper" data-menu="white" data-topbar={this.state.topbarColor} data-menutype={this.state.menuType} data-topbartype={this.state.topbarType}>
 
                 <Header {...this.props} navtype={navWidth} admintype={'general'} account={this.state.account} disconnect = {this.disconnect} balance={this.state.balance} web3 = {this.state.web3} connectWallet = {this.connectWallet} walletConnected={this.state.walletConnected}/>
                 <Sidebar {...this.props} routes={dashboardRoutes} admintype={'general'} account={this.state.account}/>
@@ -183,6 +184,7 @@ class GeneralLayout extends React.Component{
                 </div>
                 {/* <ChatSidebar {...this.props} routes={dashboardRoutes} chatwidth={chatWidth}  chattype={chatType}/> */}
                 {/* <Stylebar menuSettings={this.menuSettings} topbarSettings={this.topbarSettings} /> */}
+            </div>
             </div>
         );
     }

@@ -36,7 +36,7 @@ class FormPremade extends React.Component{
         console.log(this.state.ethBalance)
 
 
-        const PayzusContract = new web3.eth.Contract(PayzusContractABI,"0x86690e2613be52EE927d395dB87f69EBCdf88f27")
+        const PayzusContract = new web3.eth.Contract(PayzusContractABI,"0x96b37f38ad1c9c4894a681fdec45fe6b82bad1ee")
        /* const balance = await PayzusContract.methods.balanceOf(this.state.account).call()
          */
         
@@ -48,6 +48,7 @@ class FormPremade extends React.Component{
         this.setState({payzus_})*/
         
         let tokenBalance = await PayzusContract.methods.balanceOf(this.state.account).call()
+        tokenBalance = await web3.utils.fromWei(tokenBalance, "ether"); 
         this.setState({ tokenBalance : tokenBalance.toString()})
         console.log(tokenBalance)
         
@@ -279,7 +280,7 @@ class FormPremade extends React.Component{
                                                                                 const tokenAmount = this.input.value.toString()
                                                                                 if (tokenAmount <= (this.state.tokenBalance)*0.25){
                                                                                     this.setState({ 
-                                                                                        output : tokenAmount
+                                                                                        output : tokenAmount * 0.07
                                                                                         });
                                                                                 } else{
 
@@ -307,7 +308,7 @@ class FormPremade extends React.Component{
                                                                     <div className="col-md-12" style={{textAlign:"center",marginTop:'20px'}}>
                                                                     <button type="submit" className="btn btn-primary" 
                                                                         /*onClick={this.handleSubmit}*/
-                                                                        style={{width:'150px'}}
+                                                                        style={{width:'150px',backgroundColor:"dodgerblue"}}
                                                                     >
                                                                         Submit
                                                                     </button>

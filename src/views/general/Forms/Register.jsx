@@ -13,7 +13,7 @@ import generateElement from "../../../generateElement";
 import firebase from "../../../firebase-config";
 import firebaseApp from '../../../firebase-config';
 
-const database = firebase.database().ref("Payzus");
+const database = firebase.database().ref("Users");
 
 class FormGrid extends React.Component{
 
@@ -143,23 +143,28 @@ class FormGrid extends React.Component{
                     <Row>
                         <Col xs={12} md={12}>
 
-                    <div className="page-title">
+                    {/* <div className="page-title">
                         <div className="float-left">
                             <h1 className="title">Register form</h1>
                         </div>
-                    </div>
+                    </div> */}
+
+                  <div className="row" style={{marginTop: "50px"}}>
+
+                  <div className="col-lg-10 form-wrapper">
 
 
+                    <div className="col-lg-6 col-md-12">
 
-                    <div className="col-12">
-                        <section className="box ">
+                   <div className="form-fields-wrapper">
+                        <section>
                             <header className="panel_header">
                                 <h2 className="title float-left">Register</h2>
                                 
                             </header>
                             <div className="content-body">
                                 <div className="row">
-                                    <div className="col-lg-8 col-md-9 col-10">
+                                    <div className="col">
 
 
 
@@ -203,7 +208,7 @@ class FormGrid extends React.Component{
         </FormGroup>
         
       </Form>
-      <Button onClick={(event) => this.handleRegister(event)} color="primary" style={{width:'150px'}}>Register</Button>
+      <Button onClick={(event) => this.handleRegister(event)} color="primary"  className="submit-button">Register</Button>
       
       
 
@@ -214,15 +219,23 @@ class FormGrid extends React.Component{
                             </div>
                         </section>
                     </div>
-
-
-                    
-                    
-                    
+                    </div>
 
 
 
-                                
+                        
+                <div className="form-image-wrapper">
+                  <img src={require('../../../assets/img/form.jpg')} alt="" />
+                </div>
+
+
+
+                    </div>
+                   </div>
+
+
+
+      
                         </Col>
 
                     </Row>

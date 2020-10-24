@@ -1,0 +1,208 @@
+// Sidebar Styles ------------------------------------------------
+[data-menu="black"] .sidebar:after,
+[data-menu="black"] .off-canvas-sidebar:after {
+  background-color: white !important;
+}
+
+.logo {
+  background-color: white !important;
+}
+
+.nav-link {
+  i,
+  p {
+    color: gray !important;
+  }
+  &:hover {
+    background-color: dodgerblue !important;
+    i,
+    p {
+      color: white !important;
+    }
+  }
+
+  &.active {
+    background-color: dodgerblue !important;
+    i,
+    p {
+      color: white !important;
+    }
+  }
+}
+
+.navbar .container-fluid .collapse.navbar-collapse .navbar-nav .nav-item {
+  margin-top: 0;
+}
+.dropdown-toggle.nav-link {
+  padding: 10px !important;
+  &:hover {
+    background-color: rgba($color: #000000, $alpha: 0.05) !important;
+  }
+}
+
+// Header Styles --------------------------------------------------
+.eth-value {
+  background-color: transparent;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-size: 18px;
+  padding: 0 10px;
+  color: black;
+  font-family: $sans-serif-family;
+}
+
+// Dashboard Styles ------------------------------------------------
+.withdraw-btn {
+  background-color: dodgerblue !important;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-size: 16px;
+  margin-top: 10px;
+  font-family: $sans-serif-family;
+}
+
+.stats-cards-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:first-of-type {
+    margin-top: 50px;
+  }
+  margin-bottom: 30px;
+}
+
+.stats-card {
+  height: 110px;
+
+  margin: 0;
+
+  padding: 10px 20px;
+  border-radius: 6px;
+
+  background-color: $white-bg;
+
+  h1 {
+    color: $black-opacity-8;
+
+    margin: 0;
+
+    span {
+      font-size: 16px;
+    }
+  }
+
+  p {
+    margin: 0;
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-family: $sans-serif-family;
+    color: $black-opacity-5;
+  }
+}
+
+.graph-wrapper-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.yt-thumbnail-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.pdf-banner {
+  height: 300px;
+
+  a img {
+    height: 100%;
+    border: 1px solid black;
+  }
+}
+
+// Footer Styles ------------------------
+.social-icons {
+  text-align: right;
+  padding-right: 20px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  a {
+    margin: 0 5px;
+    svg {
+      width: 35px;
+      height: 35px;
+    }
+  }
+}
+
+// Login Form Styles ------------------------------------
+.form-wrapper {
+  background-color: white;
+
+  margin: 0 auto;
+  border-radius: 10px;
+
+  padding: 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-shadow: 0px 0px 10px 0.2px rgba($color: #000000, $alpha: 0.1);
+}
+
+.form-image-wrapper {
+  width: 50%;
+  height: 100%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+}
+
+.form-feilds-wrapper {
+  width: 50%;
+  height: 100%;
+
+  input {
+    &:focus {
+      border-color: dodgerblue !important;
+    }
+  }
+}
+
+.submit-button {
+  width: 100%;
+
+  margin-top: 20px;
+  color: white;
+  font-size: 18px;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  font-family: $sans-serif-family;
+  background-color: dodgerblue !important;
+}
+
+@media screen and (max-width: 992px) {
+  .form-wrapper {
+    margin: 0 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .form-image-wrapper {
+    display: none;
+  }
+  .form-feilds-wrapper {
+    width: 100%;
+    height: 100%;
+  }
+}

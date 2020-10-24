@@ -16,7 +16,8 @@
 // ##############################
 // // // general variables for charts
 // #############################
-const primaryColor = "#26a69a";
+// const primaryColor = "#26a69a";
+const primaryColor = "#1E90FF";
 const accentColor = "#ff8a65";
 const purpleColor = "#7f8ff4";
 //const chartColor = "#FFFFFF";

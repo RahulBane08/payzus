@@ -1,24 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="theme-color" content="#000000">
-        <!--
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+    <!--
             manifest.json provides metadata used when your web app is added to the
             homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
         -->
-        <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-        <link rel="icon" href="%PUBLIC_URL%/favicon.png">
-        <!-- <link rel="apple-touch-icon-precomposed" href="%PUBLIC_URL%/apple-touch-icon-57-precomposed.png">  
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
+    <!-- <link rel="apple-touch-icon-precomposed" href="%PUBLIC_URL%/apple-touch-icon-57-precomposed.png">  
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="%PUBLIC_URL%/apple-touch-icon-114-precomposed.png">   
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="%PUBLIC_URL%/apple-touch-icon-72-precomposed.png">  
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="%PUBLIC_URL%/apple-touch-icon-144-precomposed.png">    -->
 
-        <!--     Fonts and icons     -->
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
-        <link href="./preloader.css" rel="stylesheet" />
-        <!--
+    <!--     Fonts and icons     -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
+    />
+    <link href="./preloader.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <!--
             Notice the use of %PUBLIC_URL% in the tags above.
             It will be replaced with the URL of the `public` folder during the build.
             Only files inside the `public` folder can be referenced from the HTML.
@@ -28,36 +39,33 @@
             Learn how to configure a non-root public URL by running `npm run build`.
         -->
 
-        <title>Payzus - DeFi</title>
-        <style>
-            html {
-              scroll-behavior: smooth;
-            }
-            .hide {
-              opacity: 0;
-              transition: opacity 500ms;
-              
-            }
-            /* #preloader {
+    <title>Payzus - DeFi</title>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      .hide {
+        opacity: 0;
+        transition: opacity 500ms;
+      }
+      /* #preloader {
                 margin-top: 40vh;
                 
             } */
-          </style>
-    </head>
-    <body>
-        <!-- <div id="preloader">
+    </style>
+  </head>
+  <body>
+    <!-- <div id="preloader">
             <div id="loader"></div>
         </div> -->
-        
-        <div id="preloader">
-            <div id="loader"></div>
-        </div>
 
-        <noscript>
-            You need to enable JavaScript to run this app.
-        </noscript>
-        <div id="root"></div>
-        <!--
+    <div id="preloader">
+      <div id="loader"></div>
+    </div>
+
+    <noscript> You need to enable JavaScript to run this app. </noscript>
+    <div id="root"></div>
+    <!--
             This HTML file is a template.
             If you open it directly in the browser, you will see an empty page.
 
@@ -67,15 +75,17 @@
             To begin the development, run `npm start` or `yarn start`.
             To create a production bundle, use `npm run build` or `yarn build`.
         -->
-    </body>
-    <script>
-        window.addEventListener("load", function() {
-          // setTimeout(function(){ document.getElementById("loader").style.display = "none"; }, 1000);
-          // document.getElementById("loader").style.display = "none";
-    
-          var element = document.getElementById("preloader");
-          element.classList.add("hide");
-          setTimeout(function(){ element.style.display = "none"; }, 500);
-          });
-    </script>
+  </body>
+  <script>
+    window.addEventListener("load", function () {
+      // setTimeout(function(){ document.getElementById("loader").style.display = "none"; }, 1000);
+      // document.getElementById("loader").style.display = "none";
+
+      var element = document.getElementById("preloader");
+      element.classList.add("hide");
+      setTimeout(function () {
+        element.style.display = "none";
+      }, 500);
+    });
+  </script>
 </html>

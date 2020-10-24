@@ -5,8 +5,9 @@ import {
 } from 'reactstrap';
 
 import {
-    
-} from 'components';
+
+  StatsCard
+} from '../../../components/';
 
 import { Line} from 'react-chartjs-2';
 
@@ -47,7 +48,8 @@ class General extends React.Component{
         referrerAddress:"0x00",
         referrerName:"",
         tokenBalance:0,
-        account:null
+        account:null,
+        indirectRewards:0,
       };
     }
     
@@ -61,7 +63,7 @@ class General extends React.Component{
               const accounts = await Web3.eth.getAccounts();
               await this.setState({account:accounts[0]})
 
-              const PayzusContract = new Web3.eth.Contract(PayzusContractABI,"0x86690e2613be52EE927d395dB87f69EBCdf88f27");
+              const PayzusContract = new Web3.eth.Contract(PayzusContractABI,"0x96b37f38ad1c9c4894a681fdec45fe6b82bad1ee");
 
               const balance = await PayzusContract.methods.balanceOf(this.state.account).call()
               // console.log(PayzusContract)
@@ -102,6 +104,7 @@ class General extends React.Component{
                         sixthPersonRewards: temp.SixthPersonRewards,
                         seventhPersonRewards: temp.SeventhPersonRewards,
                         
+                        
 
                       }, () => {
 
@@ -126,7 +129,7 @@ class General extends React.Component{
                                 database
                                   .child(uid)
                                   .update({Rewards:this.state.rewards})
-                              },
+                              }
                               
                               )
                           })
@@ -135,19 +138,15 @@ class General extends React.Component{
                         
 
                       // console.log(this.state.rewards)
-                                          
-                  })
 
-                  
-                                
+                    })                     
           }
           else{
             // this.props.history.push("/home/login")
             window.location.href="/login"
           }               
         })
-      }
-
+      }  
       catch(error){
         console.log(error)
       }
@@ -182,7 +181,8 @@ class General extends React.Component{
                            
                           {/* <Button color="primary">Add funds</Button>
                           <Button color="primary">send</Button> */}
-                          <Button color="primary" onClick={this.handleWithdraw}>Withdraw PZS Rewards</Button>
+                          {/* <Button color="primary" onClick={this.handleWithdraw}>Withdraw PZS Rewards</Button> */}
+                          <Button color="primary"  className="withdraw-btn" onClick={this.handleWithdraw}>Withdraw PZS Rewards</Button>
                          
                         </div>
                     </div>
@@ -203,13 +203,55 @@ class General extends React.Component{
 
                             <div className="row margin-0">
 
-                                 <div className="col-12 col-lg-7 col-xl-8 col-md-7">
+                                 <div className="col-12 col-lg-12 col-xl-12 col-md-12">
                                     <section className="box" >
                                         <header className="panel_header">
                                             <h2 className="title float-left">Balance</h2>
                                             
                                         </header>
                                         <div className="content-body">        <div className="row">
+                        <div className="col-lg-12">
+                          <div className="row stats-cards-row">
+                            <div className="col-lg-3">
+                              <StatsCard title="Token Balance" pzs={(this.state.tokenBalance)/(1000000000000000000) } />
+                            </div>
+                            <div className="col-lg-3">
+                              <StatsCard title="Total Rewards" pzs={this.state.rewards} />
+                            </div>
+                            {/* <div className="col-lg-3">
+                              <StatsCard title="Your USDT Balance" pzs="194.08" />
+                            </div> */}
+                           </div>
+
+                          <div className="row stats-cards-row">
+                            <div className="col-lg-3">
+                              <StatsCard title="Direct Rewards" pzs={this.state.firstPersonRewards} />
+                            </div>
+                            <div className="col-lg-3">
+                              <StatsCard title="Indirect Rewards" pzs={this.state.indirectRewards} />
+                            </div>
+                            <div className="col-lg-3">
+                              <StatsCard title="Your Referrer" pzs={this.state.referrerName} />
+                            </div>
+                            {/* <div className="col-lg-3">
+                              <StatsCard title="Third Level Rewards" pzs="43.17" />
+                            </div> */}
+                           </div>
+
+                            
+                           
+                          </div>
+
+
+                            <div className="row margin-0 graph-wrapper-row">
+
+                                 {/* <div className="col-10 col-lg-10 col-xl-10 col-md-10">
+                                    <section className="box" >
+                                        <header className="panel_header">
+                                          <h2 className="title float-left">Balance</h2>
+                                        </header>
+                                        <div className="content-body">      
+                                          <div className="row">
                                                 <div className="col-12">
                                                     <div className="chart-container">
                                                         
@@ -225,9 +267,10 @@ class General extends React.Component{
                                             </div> 
                                         </div>
                                     </section>    
-                                </div>
+                                </div> */}
 
-                         <div className="col-12 col-lg-5 col-md-5 col-xl-4">
+                         {/* <div className="col-12 col-lg-5 col-md-5 col-xl-4">
+                                <div className="col-12 col-lg-5 col-md-5 col-xl-4">
 
                                 <section className="box ">
                                           <header className="panel_header">
@@ -239,16 +282,15 @@ class General extends React.Component{
                                                       <div className="wid-vectormap mapsmall">
                                                           <div className="row">
                                                               <div style={{width: 100+'%', height: 220}}>
+                                                              <div style={{width: 100+'%', height: 280}}>
                                                                     <ul style={{marginTop:"30px"}}>
                                                                     <p><li>Token Balance                    <span style={{float:"right"}}>{(this.state.tokenBalance) / (10 ** 18)} PZS</span></li></p>
                                                                       <p><li>Total Rewards                        <span style={{float:"right"}}>{(this.state.rewards)} PZS</span></li></p>
                                                                       <p><li>Direct Rewards           <span style={{float:"right"}}>{(this.state.firstPersonRewards)} PZS</span></li></p>
                                                                       <p><li>Indirect Rewards          <span style={{float:"right"}}>{(this.state.indirectRewards)} PZS</span></li></p>
-                                                                      {/* <p><li>Second Level Rewards    <span style={{float:"right"}}>{(this.state.thirdPersonRewards)} PZS</span></li></p>
-                                                                      <p><li>Third Level Rewards    <span style={{float:"right"}}>{(this.state.fourthPersonRewards)} PZS</span></li></p> */}
-                                                                      {/* <p><li>Direct Referred                <span style={{float:"right"}}>{this.state.directReferred}</span></li></p>
-                                                                      <p><li>Indirect Referred              <span style={{float:"right"}}>{this.state.indirectReferred}</span></li></p> */}
-                                                                      <p><li>Your Referrer                  <span style={{float:"right"}}>{this.state.referrerName}</span></li></p>
+                                                                      <p><li>Your Referrer    <span style={{float:"right"}}>{(this.state.referrerName)} PZS</span></li></p>
+                                                                      
+                                                                   
                                                                     </ul>
                                                             
                                                                     
@@ -260,16 +302,51 @@ class General extends React.Component{
                                               </div>
 
                                           </div>
+                                        </div>  
                                       </section>
  
                           </div>
+                          </div>  */}
 
 
-                          </div>
+                         
 
 
 
 
+                          <div className="row yt-thumbnail-wrapper" style={{width:100 + '%'}}>
+                <div className="col-lg-10 col-md-10 landing__context">
+                    <iframe
+                        width="100%"
+                        height="415"
+                        src="https://www.youtube.com/embed/o33NQKmjDsg?rel=0"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen></iframe>
+                </div>
+            </div>
+
+            <div className="row">
+              <div className="col-lg-6 col-md-10 pdf-banner">
+            <a href={require('../../../assets/pdf/Payzus-Whitepaper.pdf')} re target="_blank" >
+              <img src={require('../../../assets/img/Payzus-Whitepaper.PNG')} alt="" />
+            </a>
+                
+              </div>
+             
+              <div className="col-lg-6 col-md-10 pdf-banner">
+                <a href={require('../../../assets/pdf/Payzus-Defi-Platform.pdf')} re target="_blank" >
+                  <img src={require('../../../assets/img/Payzus-Defi-Platform.PNG')} alt="" />
+
+                </a>
+                
+              </div>
+            </div>
+
+
+
+
+{/* 
                     <div className="row margin-0">
                         
                         <div className="col-12 col-lg-6 col-md-6">
@@ -294,13 +371,21 @@ class General extends React.Component{
                           </div>
                           
 
-                    </div>
+                    </div> */}
+
+
+                        
+</div>
+</div>
+</div>
+</section>
+</div></div>
 
                   </Col>
 
                     </Row>
-                </div>
             </div>
+          </div>  
         );
     }
 }

@@ -215,7 +215,7 @@ class Header extends React.Component{
 
 
                            
-                                <h2>
+                                <h2 className="eth-value">
                                     {
                                         this.props.account === ''
                                         ? (<p>0 ETH</p>)

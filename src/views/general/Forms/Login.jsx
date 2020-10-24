@@ -102,24 +102,28 @@ class FormGrid extends React.Component{
                 <div className="content">
                     <Row>
                         <Col xs={12} md={12}>
+{/* 
+                          <div className="page-title">
+                              <div className="float-left">
+                                  <h1 className="title">Login form</h1>
+                              </div>
+                          </div> */}
 
-                    <div className="page-title">
-                        <div className="float-left">
-                            <h1 className="title">Login form</h1>
-                        </div>
-                    </div>
+                    <div className="row" style={{marginTop: "50px"}}>
 
+                    <div className="col-lg-10 form-wrapper">
+ 
+          
 
-
-                    <div className="col-12">
-                        <section className="box ">
+                       <div className="form-fields-wrapper">
+                          <section>
                             <header className="panel_header">
                                 <h2 className="title float-left">Login</h2>
                                 
                             </header>
                             <div className="content-body">
                                 <div className="row">
-                                    <div className="col-lg-8 col-md-9 col-10">
+                                    <div className="col">
 
 
 
@@ -244,7 +248,7 @@ class FormGrid extends React.Component{
         </FormGroup> */}
       </Form>
       <ResetPassword />
-      <Button onClick={(event) => this.handleLogin(event)} color="primary" style={{width:'150px'}}>Login</Button>
+      <Button onClick={(event) => this.handleLogin(event)} color="primary" className="submit-button">Login</Button>
       
       {/* <Button onClick={(event) => this.final(event)}>final</Button> */}
       
@@ -259,11 +263,14 @@ class FormGrid extends React.Component{
                     </div>
 
 
+                      <div className="form-image-wrapper">
+                        <img src={require('../../../assets/img/form.jpg')} alt="" />
+                      </div>
                     
                     
-                    
-
-
+                      </div>
+           
+                      </div>
 
                                 
                         </Col>

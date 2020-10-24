@@ -64,7 +64,7 @@ class UIModals extends React.Component{
             <div>
                 <div>
                     {/* <Button color="primary" onClick={this.toggle}>Forgot Password?</Button> */}
-                    <a color="primary" onClick={this.toggle} style={{float:"right",cursor:"pointer", color:"#26a69a"}}>
+                    <a color="primary" onClick={this.toggle} style={{float:"right",cursor:"pointer", color:"dodgerblue"}}>
                         Forgot Password?
                     </a>
                     <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
