@@ -10,7 +10,7 @@ import swal from "sweetalert";
 import generateElement from "../../../generateElement";
 import firebaseApp from '../../../firebase-config';
 
-const database = firebaseApp.database().ref("Users");
+const database = firebaseApp.database().ref("Payzus");
 
 class ReferSomeone extends React.Component{
     constructor(props){

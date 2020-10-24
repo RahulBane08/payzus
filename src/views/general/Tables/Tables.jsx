@@ -10,7 +10,7 @@ import {
 import firebaseApp from '../../../firebase-config';
 import { Link } from 'react-router-dom';
 
-const database = firebaseApp.database().ref("Users");
+const database = firebaseApp.database().ref("Payzus");
 
 class UITables extends React.Component{
    constructor(props){

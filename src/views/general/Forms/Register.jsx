@@ -13,7 +13,7 @@ import generateElement from "../../../generateElement";
 import firebase from "../../../firebase-config";
 import firebaseApp from '../../../firebase-config';
 
-const database = firebase.database().ref("Users");
+const database = firebase.database().ref("Payzus");
 
 class FormGrid extends React.Component{
 

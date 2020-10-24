@@ -25,7 +25,7 @@ import ReferralContractABI from "../../../contracts/pyzusReferral.json";
 import generateElement from "../../../generateElement";
 
 
-const database = firebaseApp.database().ref("Users");
+const database = firebaseApp.database().ref("Payzus");
 
 class General extends React.Component{
 

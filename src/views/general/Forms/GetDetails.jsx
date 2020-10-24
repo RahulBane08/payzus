@@ -12,30 +12,92 @@ import generateElement from "../../../generateElement";
 // import PayzusContractABI from "../../../contracts/pyzusReferral.json";
 import firebaseApp from '../../../firebase-config';
 import Mobile from "./countryCode";
+import Web3 from 'web3'
+import PayzusContractABI from "../../../contracts/PAYZUS.json";
 
-const database = firebaseApp.database().ref("Users");
+const database = firebaseApp.database().ref("Payzus");
 const StorageRef = firebaseApp.storage().ref('Images');
 
 class FormPremade extends React.Component{
+
+    async componentWillMount(){
+        await this.loadWeb3()
+        await this.loadAccountDetails()
+    }
+
+    async loadAccountDetails(){
+
+        const web3 = window.web3  
+        const accounts = await web3.eth.getAccounts()
+        this.setState({ account : accounts[0]})
+
+        const ethBalance = await web3.eth.getBalance(this.state.account)
+        this.setState({ethBalance})
+        console.log(this.state.ethBalance)
+
+
+        const PayzusContract = new web3.eth.Contract(PayzusContractABI,"0x86690e2613be52EE927d395dB87f69EBCdf88f27")
+       /* const balance = await PayzusContract.methods.balanceOf(this.state.account).call()
+         */
+        
+
+        const networkId = await web3.eth.net.getId()
+        /*const Payzus_Data = PAYZUS.networks[networkId]*/
+        /*if(Payzus_Data){
+        const payzus_ = new web3.eth.Contract(PAYZUS.abi, Payzus_Data.address)
+        this.setState({payzus_})*/
+        
+        let tokenBalance = await PayzusContract.methods.balanceOf(this.state.account).call()
+        this.setState({ tokenBalance : tokenBalance.toString()})
+        console.log(tokenBalance)
+        
+        /*let currentPrice = await PayzusContract.methods.buyPrice().call() 
+        this.setState({ currentPrice : currentPrice.toString()})
+         */
+        
+        console.log(this.state.PayzusContract)
+
+        this.setState({loading : false})
+    }
+    
+
+    async loadWeb3(){ 
+        if(window.ethereum){
+          window.web3 = new Web3(window.ethereum)
+          await window.ethereum.enable()
+    
+        }
+        else if(window.web3){
+          window.web3 = new Web3(window.web3.currentProvider)
+        }
+        else{
+          window.alert('Non-ethereum browser detected. Try Metamask instead.')
+        }
+    }
+
     constructor(props){
         super(props);
 
         this.state = {
             uid:"",
             mobile:"",
+            account:"",
+            ethBalance:"",
+            tokenBalance:"",
             photoIdNumber:"",
             IdFile1:null,
             IdFile2:null,
             kycStatus:null,
             IdURL1:"",
-            IdURL2:""
+            IdURL2:"",
+            output:"0"
             
 
         }
 
     }
 
-    componentDidMount = async () => {
+  /*  componentDidMount = async () => {
 
         await this.setState({uid:this.props.uid});
 
@@ -155,7 +217,7 @@ class FormPremade extends React.Component{
 
         this.setState({mobile:"", aadharNumber:"", aadharFile1:null, aadharFile2:null})    
                   
-    }
+    }*/
 
     render(){
 
@@ -166,7 +228,7 @@ class FormPremade extends React.Component{
                         <Col xs={12} md={12}>
                             <div className="page-title">
                                 <div className="float-left">
-                                    <h1 className="title">Get Your KYC Done For Widhdrawing PZS Rewards</h1>
+                                    <h1 className="title">Swap Payzus Tokens to USDT</h1>
                                 </div>
                             </div>
                             {
@@ -189,49 +251,69 @@ class FormPremade extends React.Component{
                                                 <div className="row">
                                                         <div className="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-8">
                                                             
-                                                            <form>
-                                                            <label htmlFor="inputAddress">Your Mobile (With Country Code)</label>
-                                                                <div className="form-row">
-                                                                    
-                                                                    <div className="form-group col-md-3">  
-                                                                        <Mobile uid={this.state.uid}/>
-                                                                    </div>
-                                                                    <div className="form-group col-md-9">
+                                                            <form
+                                                                /*onSubmit = {(event,value) =>{
+                                                                    event.preventDefault()
+                                                                    console.log("swapping tokens..")
+                                                                    console.log(value.number)
+                                                                    let tokenAmount = value.number
+                                                                    console.log(tokenAmount)
+                                                                    tokenAmount = window.web3.utils.toWei(tokenAmount, 'Ether')
+                                                                    /*this.props.buy(etherAmount)*/
+                                                                    onSubmit = {(event) =>{
+                                                                        event.preventDefault()
+                                                                        console.log("purchasing tokens..")
+                                                                        let etherAmount 
+                                                                        etherAmount = this.input.value.toString()
+                                                                        etherAmount = window.web3.utils.toWei(etherAmount, 'Ether')
                                                                         
-                                                                        <input type="text"  className="form-control" id="inputMobile" placeholder=""
-                                                                            value={this.state.mobile}
-                                                                            onChange={event => this.setState({mobile:event.target.value})}
-                                                                        />
+                                                                        
+                                                                        }}
+                                                            >
+                                                                
+                                                                    
+                                                                    <div className="form-group">                                                                  
+                                                                        <label htmlFor="inputEmail4">Enter amount of tokens to swap:</label>
+                                                                        <input type="text" className="form-control" placeholder="0"
+                                                                            onChange = {(event) => {
+                                                                                const tokenAmount = this.input.value.toString()
+                                                                                if (tokenAmount <= (this.state.tokenBalance)*0.25){
+                                                                                    this.setState({ 
+                                                                                        output : tokenAmount
+                                                                                        });
+                                                                                } else{
 
+                                                                                    this.setState({
+                                                                                        output : "CAN SWAP ONLY UPTO 25% OF TOTAL TOKEN BALANCE"
+                                                                                        });
+                                                                                }
+
+                                                                            }}
+                                                                            ref = {(input) => {this.input = input}}
+                                                                        
+                                                                        />                                                                                                                                     
                                                                     </div>
 
-                                                                </div>
-                                                                
-                                                                <div className="form-group">                                                                  
-                                                                    <label htmlFor="inputEmail4">Identity Proof Number</label>
-                                                                    <input type="text" className="form-control" id="inputAadhar" placeholder=""
-                                                                        value={this.state.aadharNumber}
-                                                                        onChange={event => this.setState({photoIdNumber:event.target.value})}
-                                                                    />                                                                                                                                     
-                                                                </div>
-                                                                
-                                                                <div className="form-group">                                                                  
-                                                                    <label htmlFor="inputEmail4">Identity Proof</label>
-                                                                    <input type="file" className="form-control" id="uploadAadhar" multiple placeholder=""
-                                                                       onChange={event => this.onFileUpload(event)}
-                                                                       onClick={(e) => (e.target.value = null)}
-                                                                    />                                                                                                                                     
-                                                                </div>
-                                                                <p style={{color:"#26a69a"}}>Please Upload both front and back</p>
-                                                            </form>
-                                                                <div className="col-md-12" style={{textAlign:"center",marginTop:'20px'}}>
+                                                                    <div className="form-group">                                                                  
+                                                                        <label htmlFor="inputEmail4">USDT Received:</label>
+                                                                        <input type="text" className="form-control" placeholder="0"
+                                                                            value = {this.state.output}
+                                                                            disabled
+                                                                        
+                                                                        />                                                                                                                                     
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    <div className="col-md-12" style={{textAlign:"center",marginTop:'20px'}}>
                                                                     <button type="submit" className="btn btn-primary" 
-                                                                        onClick={this.handleSubmit}
+                                                                        /*onClick={this.handleSubmit}*/
                                                                         style={{width:'150px'}}
                                                                     >
                                                                         Submit
                                                                     </button>
                                                                 </div>
+                                                            </form>
+                                                                
                                                                 
                                                             
 

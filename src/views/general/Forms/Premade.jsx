@@ -15,7 +15,7 @@ import ReferralContractABI from "../../../contracts/pyzusReferral.json";
 import firebaseApp from '../../../firebase-config';
 import { data } from 'jquery';
 
-const database = firebaseApp.database().ref("Users");
+const database = firebaseApp.database().ref("Payzus");
 
 class FormPremade extends React.Component{
     constructor(props){

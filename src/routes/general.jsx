@@ -23,7 +23,7 @@ var dashRoutes = [
 
     { path: BASEDIR+"/market", name: "Market", icon: "chart", component: UIBSDatatable },
 
-    { path: BASEDIR+"/kyc", name: "KYC", icon: "puzzle", component: GetDetails },
+    { path: BASEDIR+"/kyc", name: "Swap PZS to USD", icon: "puzzle", component: GetDetails },
 
     { path: BASEDIR+"/buy-payzus", name: "Buy Payzus", icon: "bag", component: FormPremade },
 
