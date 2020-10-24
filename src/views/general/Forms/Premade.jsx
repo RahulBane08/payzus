@@ -15,7 +15,7 @@ import ReferralContractABI from "../../../contracts/pyzusReferral.json";
 import firebaseApp from '../../../firebase-config';
 import { data } from 'jquery';
 
-const database = firebaseApp.database().ref("Users");
+const database = firebaseApp.database().ref("Payzus");
 
 class FormPremade extends React.Component{
     constructor(props){
@@ -376,6 +376,8 @@ class FormPremade extends React.Component{
 
     handleBuyPayzus = async () => {
 
+        var count1;
+
         if(this.state.price != 0){
 
         var tokens = this.state.tokenNumbers;
@@ -402,6 +404,16 @@ class FormPremade extends React.Component{
             value:this.state.price
         })
 
+        await database
+                .child(this.state.uid + '/TokenBalance')
+                .once("value", token => {
+                    count1 = token.val();
+                })
+                .then(() => {
+                    database
+                        .child(this.state.uid)
+                        .update({TokenBalance: tokens + count1})
+                })
         // console.log(result)
         
 

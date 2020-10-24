@@ -50,6 +50,8 @@ class General extends React.Component{
         tokenBalance:0,
         account:null,
         indirectRewards:0,
+        totalTokenBalance:0,
+        usdtBalnce:0,
       };
     }
     
@@ -103,8 +105,8 @@ class General extends React.Component{
                         fifthPersonRewards: temp.FifthPersonRewards,
                         sixthPersonRewards: temp.SixthPersonRewards,
                         seventhPersonRewards: temp.SeventhPersonRewards,
-                        
-                        
+                        totalTokenBalance: temp.TokenBalance,
+                        usdtBalnce: temp.USDTBalance
 
                       }, () => {
 
@@ -124,7 +126,8 @@ class General extends React.Component{
                               this.state.sixthPersonRewards +
                             this.state.seventhPersonRewards ),
                                 
-                            indirectRewards: (this.state.secondPersonRewards + this.state.thirdPersonRewards + this.state.fourthPersonRewards + this.state.fifthPersonRewards + this.state.sixthPersonRewards + this.state.seventhPersonRewards)
+                            indirectRewards: (this.state.secondPersonRewards + this.state.thirdPersonRewards + this.state.fourthPersonRewards + this.state.fifthPersonRewards + this.state.sixthPersonRewards + this.state.seventhPersonRewards),
+                            totalTokenBalance:  (this.state.totalTokenBalance + this.state.firstPersonRewards + this.state.secondPersonRewards + this.state.thirdPersonRewards + this.state.fourthPersonRewards + this.state.fifthPersonRewards + this.state.sixthPersonRewards + this.state.seventhPersonRewards),
                           }, () => {
                                 database
                                   .child(uid)
@@ -213,29 +216,47 @@ class General extends React.Component{
                         <div className="col-lg-12">
                           <div className="row stats-cards-row">
                             <div className="col-lg-3">
-                              <StatsCard title="Token Balance" pzs={(this.state.tokenBalance)/(1000000000000000000) } />
+                              <StatsCard title="Total Balance" pzs={this.state.totalTokenBalance } />
                             </div>
                             <div className="col-lg-3">
                               <StatsCard title="Total Rewards" pzs={this.state.rewards} />
                             </div>
-                            {/* <div className="col-lg-3">
-                              <StatsCard title="Your USDT Balance" pzs="194.08" />
-                            </div> */}
+                            <div className="col-lg-3">
+                              <StatsCard title="USDT Balance" pzs={this.state.usdtBalnce.toFixed(3)} />
+                            </div>
                            </div>
 
                           <div className="row stats-cards-row">
-                            <div className="col-lg-3">
+                          <div className="col-lg-3">
                               <StatsCard title="Direct Rewards" pzs={this.state.firstPersonRewards} />
                             </div>
                             <div className="col-lg-3">
-                              <StatsCard title="Indirect Rewards" pzs={this.state.indirectRewards} />
+                              <StatsCard title="First level Rewards" pzs={this.state.secondPersonRewards} />
+                            </div>
+                            <div className="col-lg-3">
+                              <StatsCard title="Second level Rewards" pzs={this.state.thirdPersonRewards} />
+                            </div>
+                            <div className="col-lg-3">
+                              <StatsCard title="Third level Rewards" pzs={this.state.fourthPersonRewards} />
+                            </div>
+                            
+                           </div>
+
+                           <div className="row stats-cards-row">
+                            
+                            <div className="col-lg-3">
+                              <StatsCard title="Fourth level Rewards" pzs={this.state.fifthPersonRewards} />
+                            </div>
+                            <div className="col-lg-3">
+                              <StatsCard title="Fifth level Rewards" pzs={this.state.sixthPersonRewards} />
+                            </div>
+                            <div className="col-lg-3">
+                              <StatsCard title="Sixth level Rewards" pzs={this.state.seventhPersonRewards} />
                             </div>
                             <div className="col-lg-3">
                               <StatsCard title="Your Referrer" pzs={this.state.referrerName} />
                             </div>
-                            {/* <div className="col-lg-3">
-                              <StatsCard title="Third Level Rewards" pzs="43.17" />
-                            </div> */}
+                            
                            </div>
 
                             

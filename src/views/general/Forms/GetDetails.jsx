@@ -21,8 +21,11 @@ const StorageRef = firebaseApp.storage().ref('Images');
 class FormPremade extends React.Component{
 
     async componentWillMount(){
+
+        await this.setState({uid:this.props.uid}) 
         await this.loadWeb3()
         await this.loadAccountDetails()
+      
     }
 
     async loadAccountDetails(){
@@ -47,15 +50,40 @@ class FormPremade extends React.Component{
         const payzus_ = new web3.eth.Contract(PAYZUS.abi, Payzus_Data.address)
         this.setState({payzus_})*/
         
-        let tokenBalance = await PayzusContract.methods.balanceOf(this.state.account).call()
-        tokenBalance = await web3.utils.fromWei(tokenBalance, "ether"); 
-        this.setState({ tokenBalance : tokenBalance.toString()})
-        console.log(tokenBalance)
+        // let tokenBalance = await PayzusContract.methods.balanceOf(this.state.account).call()
+        // tokenBalance = await web3.utils.fromWei(tokenBalance, "ether"); 
+        // this.setState({ tokenBalance : tokenBalance.toString()})
+        // console.log(tokenBalance)
         
         /*let currentPrice = await PayzusContract.methods.buyPrice().call() 
         this.setState({ currentPrice : currentPrice.toString()})
          */
-        
+        let value;
+
+        await database
+                .child(this.state.uid )
+                .once("value", snapshot => {
+                    const temp = snapshot.val();
+                    this.setState({
+                        totalBalance: temp.TokenBalance,
+                        firstPerson:temp.FirstPersonRewards,
+                        secondPerson:temp.SecondPersonRewards,
+                        thirdPerson: temp.ThirdPersonRewards,
+                        fourthPerson: temp.FourthPersonRewards,
+                        fifthPerson: temp.FifthPersonRewards,
+                        sixthPerson: temp.SixthPersonRewards,
+                        seventhPerson: temp.SeventhPersonRewards
+                    },() => {
+                        this.setState({tokenBalance: (this.state.totalBalance + this.state.firstPerson + this.state.secondPerson + this.state.thirdPerson + this.state.fourthPerson + this.state.fifthPerson + this.state.sixthPerson + this.state.seventhPerson)  })
+                    })
+                   
+                })
+                .then(() => {
+                    console.log(this.state.tokenBalance, this.state.seventhPerson);
+                })
+
+                
+
         console.log(this.state.PayzusContract)
 
         this.setState({loading : false})
@@ -91,7 +119,18 @@ class FormPremade extends React.Component{
             kycStatus:null,
             IdURL1:"",
             IdURL2:"",
-            output:"0"
+            output:"0",
+            totalBalance:0,
+            firstPerson:0,
+            secondPerson:0,
+            thirdPerson:0,
+            fourthPerson:0,
+            fifthPerson:0,
+            sixthPerson:0,
+            seventhPerson:0,
+            allowed:false,
+            amount:0
+            
             
 
         }
@@ -220,6 +259,33 @@ class FormPremade extends React.Component{
                   
     }*/
 
+    handleSubmit = async () => {
+       
+        if(this.state.allowed === false){
+            return
+        }
+
+        else{
+
+            let pzs;
+            let usd;
+            await database
+                    .child(this.state.uid)
+                    .once("value", snapshot => {
+                        let temp = snapshot.val()
+                        pzs = temp.TokenBalance;
+                        usd = temp.USDTBalance;
+                    })
+                    .then(() => {
+                        database
+                            .child(this.state.uid)
+                            .update({TokenBalance: pzs - this.state.amount , USDTBalance: usd + this.state.output})
+                    })
+        }
+
+        
+    }
+
     render(){
 
         return (
@@ -280,7 +346,9 @@ class FormPremade extends React.Component{
                                                                                 const tokenAmount = this.input.value.toString()
                                                                                 if (tokenAmount <= (this.state.tokenBalance)*0.25){
                                                                                     this.setState({ 
-                                                                                        output : tokenAmount * 0.07
+                                                                                        output : tokenAmount * 0.07,
+                                                                                        allowed:true,
+                                                                                        amount: tokenAmount
                                                                                         });
                                                                                 } else{
 
@@ -309,6 +377,7 @@ class FormPremade extends React.Component{
                                                                     <button type="submit" className="btn btn-primary" 
                                                                         /*onClick={this.handleSubmit}*/
                                                                         style={{width:'150px',backgroundColor:"dodgerblue"}}
+                                                                        onClick={this.handleSubmit}
                                                                     >
                                                                         Submit
                                                                     </button>
