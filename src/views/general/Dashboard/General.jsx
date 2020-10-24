@@ -39,6 +39,9 @@ class General extends React.Component{
         secondPersonRewards:0,
         thirdPersonRewards:0,
         fourthPersonRewards:0,
+        fifthPersonRewards:0,
+        sixthPersonRewards:0,
+        seventhPersonRewards:0,
         directReferred:0,
         indirectReferred:0,
         referrerAddress:"0x00",
@@ -94,7 +97,11 @@ class General extends React.Component{
                         firstPersonRewards: temp.FirstPersonRewards,
                         secondPersonRewards: temp.SecondPersonRewards,
                         thirdPersonRewards: temp.ThirdPersonRewards,
-                        fourthPersonRewards: temp.FourthPersonRewards
+                        fourthPersonRewards: temp.FourthPersonRewards,
+                        fifthPersonRewards: temp.FifthPersonRewards,
+                        sixthPersonRewards: temp.SixthPersonRewards,
+                        seventhPersonRewards: temp.SeventhPersonRewards,
+                        
 
                       }, () => {
 
@@ -106,14 +113,22 @@ class General extends React.Component{
                           .then(() => {
 
                               this.setState({rewards:  
-                              this.state.firstPersonRewards + 
+                              ( this.state.firstPersonRewards + 
                               this.state.secondPersonRewards + 
                               this.state.thirdPersonRewards +
-                              this.state.fourthPersonRewards}, () => {
+                              this.state.fourthPersonRewards +
+                              this.state.fifthPersonRewards +
+                              this.state.sixthPersonRewards +
+                            this.state.seventhPersonRewards ),
+                                
+                            indirectRewards: (this.state.secondPersonRewards + this.state.thirdPersonRewards + this.state.fourthPersonRewards + this.state.fifthPersonRewards + this.state.sixthPersonRewards + this.state.seventhPersonRewards)
+                          }, () => {
                                 database
                                   .child(uid)
                                   .update({Rewards:this.state.rewards})
-                              })
+                              },
+                              
+                              )
                           })
                         
                       });
@@ -223,14 +238,14 @@ class General extends React.Component{
                                                   <div className="col-12">
                                                       <div className="wid-vectormap mapsmall">
                                                           <div className="row">
-                                                              <div style={{width: 100+'%', height: 280}}>
+                                                              <div style={{width: 100+'%', height: 220}}>
                                                                     <ul style={{marginTop:"30px"}}>
                                                                     <p><li>Token Balance                    <span style={{float:"right"}}>{(this.state.tokenBalance) / (10 ** 18)} PZS</span></li></p>
                                                                       <p><li>Total Rewards                        <span style={{float:"right"}}>{(this.state.rewards)} PZS</span></li></p>
                                                                       <p><li>Direct Rewards           <span style={{float:"right"}}>{(this.state.firstPersonRewards)} PZS</span></li></p>
-                                                                      <p><li>First Level Rewards          <span style={{float:"right"}}>{(this.state.secondPersonRewards)} PZS</span></li></p>
-                                                                      <p><li>Second Level Rewards    <span style={{float:"right"}}>{(this.state.thirdPersonRewards)} PZS</span></li></p>
-                                                                      <p><li>Third Level Rewards    <span style={{float:"right"}}>{(this.state.fourthPersonRewards)} PZS</span></li></p>
+                                                                      <p><li>Indirect Rewards          <span style={{float:"right"}}>{(this.state.indirectRewards)} PZS</span></li></p>
+                                                                      {/* <p><li>Second Level Rewards    <span style={{float:"right"}}>{(this.state.thirdPersonRewards)} PZS</span></li></p>
+                                                                      <p><li>Third Level Rewards    <span style={{float:"right"}}>{(this.state.fourthPersonRewards)} PZS</span></li></p> */}
                                                                       {/* <p><li>Direct Referred                <span style={{float:"right"}}>{this.state.directReferred}</span></li></p>
                                                                       <p><li>Indirect Referred              <span style={{float:"right"}}>{this.state.indirectReferred}</span></li></p> */}
                                                                       <p><li>Your Referrer                  <span style={{float:"right"}}>{this.state.referrerName}</span></li></p>

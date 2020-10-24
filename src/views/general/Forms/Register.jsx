@@ -100,6 +100,9 @@ class FormGrid extends React.Component{
                       SecondPersonRewards:0,
                       ThirdPersonRewards:0,
                       FourthPersonRewards:0,
+                      FifthPersonRewards:0,
+                      SixthPersonRewards:0,
+                      SeventhPersonRewards:0,
                       CountryCode:91
                     })
                 .then(() => {
